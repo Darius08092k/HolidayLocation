@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uFa8zbP/AlM=",
+  "dgSpecHash": "n2u3u7S22Ag=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
+  "projectFilePath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dariu\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
@@ -23,6 +23,7 @@
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.20\\microsoft.entityframeworkcore.inmemory.8.0.20.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.20\\microsoft.entityframeworkcore.relational.8.0.20.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\8.0.20\\microsoft.entityframeworkcore.sqlserver.8.0.20.nupkg.sha512",
+    "C:\\Users\\dariu\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.20\\microsoft.entityframeworkcore.tools.8.0.20.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\dariu\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.1\\microsoft.extensions.caching.memory.8.0.1.nupkg.sha512",

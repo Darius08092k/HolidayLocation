@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {}
+    "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {
+    "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
+        "projectUniqueName": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
         "projectName": "HolidayLocation_API",
-        "projectPath": "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
+        "projectPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
         "packagesPath": "C:\\Users\\dariu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dariu\\source\\repos\\Darius08092k\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\obj\\",
+        "outputPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -65,6 +65,12 @@
               "version": "[8.0.20, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.20, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.20, )"
             },
