@@ -51,3 +51,4 @@ Thumbs.db
 .env.test.local
 .env.production.local
 /.vs
+/Backend/HolidayLocation_API/.vs

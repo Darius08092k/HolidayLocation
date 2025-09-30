@@ -1,0 +1,38 @@
+[
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "CreateProperty",
+    "RelativePath": "api/PropertyAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "property",
+        "Type": "HolidayLocation_API.Models.Property",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HolidayLocation_API.Models.Property",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "GetProperties",
+    "RelativePath": "api/PropertyAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
