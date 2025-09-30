@@ -60,7 +60,7 @@ namespace HolidayLocation_API.Controllers
             {
                 return BadRequest("Invalid property ID");
             }
-
+  
             if (property == null)
             {
                 return BadRequest("Property data is required");
