@@ -1,4 +1,4 @@
-﻿using HolidayLocation_API.Models;
+﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -53,16 +53,30 @@ namespace HolidayLocation_API.Controllers
             return NoContent();
         }
 
-        [HttpPost("UpdateProperty")]
-        public async Task<IActionResult> UpdateProperty(Property porperty)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateProperty(int id, Property property)
         {
-            var villa = await _dbVilla.GetByIdAsync(porperty.Id);
+            if (id <= 0)
+            {
+                return BadRequest("Invalid property ID");
+            }
+
+            if (property == null)
+            {
+                return BadRequest("Property data is required");
+            }
+
+            var villa = await _dbVilla.GetByIdAsync(id);
             if (villa == null)
             {
-                return NotFound();
+                return NotFound($"Property with ID {id} not found");
             }
-            await _dbVilla.UpdatePropertyAsync(porperty);
-            return NoContent();
+
+            // Set the ID to ensure we're updating the correct entity
+            property.Id = id;
+            
+            var updatedProperty = await _dbVilla.UpdatePropertyAsync(property);
+            return Ok(updatedProperty);
         }
 
     }
