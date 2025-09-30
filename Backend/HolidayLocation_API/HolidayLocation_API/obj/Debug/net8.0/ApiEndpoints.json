@@ -71,13 +71,18 @@
   {
     "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
     "Method": "UpdateProperty",
-    "RelativePath": "api/PropertyAPI/UpdateProperty",
-    "HttpMethod": "POST",
+    "RelativePath": "api/PropertyAPI/{id}",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "porperty",
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "property",
         "Type": "HolidayLocation_API.Models.Property",
         "IsRequired": true
       }

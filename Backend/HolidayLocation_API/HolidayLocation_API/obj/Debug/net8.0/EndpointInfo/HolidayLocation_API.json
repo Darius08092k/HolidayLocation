@@ -105,12 +105,21 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/PropertyAPI/UpdateProperty": {
-      "post": {
+      },
+      "put": {
         "tags": [
           "Property"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {

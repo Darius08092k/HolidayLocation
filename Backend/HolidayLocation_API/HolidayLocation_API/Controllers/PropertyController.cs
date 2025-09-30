@@ -1,4 +1,4 @@
-﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -66,15 +66,16 @@ namespace HolidayLocation_API.Controllers
                 return BadRequest("Property data is required");
             }
 
-            var villa = await _dbVilla.GetByIdAsync(id);
-            if (villa == null)
+            // Check if property exists without tracking
+            var exists = await _dbVilla.PropertyExistsAsync(id);
+            if (!exists)
             {
                 return NotFound($"Property with ID {id} not found");
             }
 
             // Set the ID to ensure we're updating the correct entity
             property.Id = id;
-            
+
             var updatedProperty = await _dbVilla.UpdatePropertyAsync(property);
             return Ok(updatedProperty);
         }

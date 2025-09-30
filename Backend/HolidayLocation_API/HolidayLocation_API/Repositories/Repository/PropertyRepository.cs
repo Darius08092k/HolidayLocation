@@ -1,6 +1,7 @@
-﻿using HolidayLocation_API.Data;
+﻿﻿using HolidayLocation_API.Data;
 using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace HolidayLocation_API.Repositories.Repository
 {
@@ -17,6 +18,11 @@ namespace HolidayLocation_API.Repositories.Repository
             _db.Property.Update(property);
             await _db.SaveChangesAsync();
             return property;
+        }
+
+        public async Task<bool> PropertyExistsAsync(int id)
+        {
+            return await _db.Property.AsNoTracking().AnyAsync(p => p.Id == id);
         }
     }
 }
