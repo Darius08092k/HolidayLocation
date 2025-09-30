@@ -1,7 +1,11 @@
-﻿namespace HolidayLocation_API.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace HolidayLocation_API.Models
 {
     public class Property
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }

@@ -27,12 +27,61 @@
   },
   {
     "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
-    "Method": "GetProperties",
+    "Method": "GetAllProperties",
     "RelativePath": "api/PropertyAPI",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "DeleteProperty",
+    "RelativePath": "api/PropertyAPI",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "GetProperty",
+    "RelativePath": "api/PropertyAPI/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [],
+    "EndpointName": "GetProperty"
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "UpdateProperty",
+    "RelativePath": "api/PropertyAPI/UpdateProperty",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "porperty",
+        "Type": "HolidayLocation_API.Models.Property",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

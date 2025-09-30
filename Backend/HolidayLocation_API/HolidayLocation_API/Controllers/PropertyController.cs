@@ -24,13 +24,46 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProperties()
+        public async Task<IActionResult> GetAllProperties()
         {
             var villaList = await _dbVilla.GetAllAsync();
             return Ok(villaList);
         }
 
-        //[HttpDelete("{id:int}", Name = "DeleteProperty")]
+        [HttpGet("{id:int}", Name = "GetProperty")] 
+        public async Task<IActionResult> GetProperty(int id)
+        {
+            var villa = await _dbVilla.GetByIdAsync(id);
+            if (villa == null)
+            {
+                return NotFound();
+            }
+            return Ok(villa);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProperty(int id)
+        {
+            var villa = await _dbVilla.GetByIdAsync(id);
+            if (villa == null)
+            {
+                return NotFound();
+            }
+            await _dbVilla.DeleteAsync(id);
+            return NoContent();
+        }
+
+        [HttpPost("UpdateProperty")]
+        public async Task<IActionResult> UpdateProperty(Property porperty)
+        {
+            var villa = await _dbVilla.GetByIdAsync(porperty.Id);
+            if (villa == null)
+            {
+                return NotFound();
+            }
+            await _dbVilla.UpdatePropertyAsync(porperty);
+            return NoContent();
+        }
 
     }
 }

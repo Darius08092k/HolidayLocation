@@ -19,9 +19,19 @@ namespace HolidayLocation_API.Repositories.Repository
             await SaveAsync();
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var property = await _context.Set<T>().FindAsync(id);
+
+            if(property == null)
+            {
+                throw new ArgumentException("Entity not found in the database.");
+            }
+            else
+            {
+                _context.Set<T>().Remove(property);
+                await SaveAsync();
+            }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
