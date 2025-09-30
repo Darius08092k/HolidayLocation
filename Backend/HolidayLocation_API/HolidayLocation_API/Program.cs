@@ -14,8 +14,8 @@ namespace HolidayLocation_API
 
 
 
-            builder.Services.AddDbContext<AppDbContext>(options => 
-                    options.UseInMemoryDatabase("HolidayLocationInMemDB"));
+/*            builder.Services.AddDbContext<AppDbContext>(options => 
+                    options.UseInMemoryDatabase("HolidayLocationInMemDB"));*/
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("HolidayLocationSQLConnection")));
