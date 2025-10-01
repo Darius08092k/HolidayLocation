@@ -1,0 +1,44 @@
+<h2 class="text-center my-5"> Property List</h2>
+
+<div class="card">
+  <div class="card-header">
+    <p class="fs-5"> Overview </p>
+  </div>
+
+  <div class="card-body">
+      <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Details</th>
+      <th>Rate</th>
+      <th>Occupancy</th>
+      <th>Sqft</th>
+      <th>Image</th>
+      <th>Amenity</th>
+      <th>Created Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let property of properties">
+      <td>{{property.id}} </td>
+      <td>{{property.name}} </td>
+      <td>{{property.details}} </td>
+      <td>${{property.rate}} </td>
+      <td>{{property.occupancy}} </td>
+      <td>{{property.sqft}} sq ft</td>
+      <td>
+        <img *ngIf="property.imageUrl" [src]="property.imageUrl" [alt]="property.name" class="img-thumbnail" style="width: 50px; height: 50px;">
+        <span *ngIf="!property.imageUrl">No Image</span>
+      </td>
+      <td>{{property.amenity}} </td>
+      <td>{{property.createdDate | date:'short'}} </td>
+    </tr>
+    <tr *ngIf="properties.length === 0">
+      <td colspan="9" class="text-center">No properties available</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
