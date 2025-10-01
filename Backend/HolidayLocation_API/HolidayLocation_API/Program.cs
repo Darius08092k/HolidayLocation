@@ -26,7 +26,7 @@ namespace HolidayLocation_API
             {
                 options.AddPolicy("PropetiesCORS",
                     policy => policy
-                        .WithOrigins("http://localhost:4200")
+                        .WithOrigins("http://localhost:4200", "http://192.168.1.138:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod());
             });
