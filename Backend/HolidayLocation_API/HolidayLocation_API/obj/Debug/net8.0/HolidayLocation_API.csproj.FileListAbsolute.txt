@@ -441,4 +441,3 @@ C:\Users\dariu\Desktop\C#\Projects\HolidayLocation\Backend\HolidayLocation_API\H
 C:\Users\dariu\Desktop\C#\Projects\HolidayLocation\Backend\HolidayLocation_API\HolidayLocation_API\obj\Debug\net8.0\HolidayLocation_API.pdb
 C:\Users\dariu\Desktop\C#\Projects\HolidayLocation\Backend\HolidayLocation_API\HolidayLocation_API\obj\Debug\net8.0\HolidayLocation_API.genruntimeconfig.cache
 C:\Users\dariu\Desktop\C#\Projects\HolidayLocation\Backend\HolidayLocation_API\HolidayLocation_API\obj\Debug\net8.0\ref\HolidayLocation_API.dll
-C:\Users\dariu\Desktop\C#\Projects\HolidayLocation\Backend\HolidayLocation_API\HolidayLocation_API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
