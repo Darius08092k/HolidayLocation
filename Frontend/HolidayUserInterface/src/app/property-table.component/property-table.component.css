@@ -1,0 +1,150 @@
+/* Property grid layout */
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Property card styling */
+.property-card {
+  position: relative;
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* Property overlay */
+.property-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.property-overlay.show {
+  opacity: 1;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+}
+
+/* Property info */
+.property-info {
+  margin-top: auto;
+}
+
+.property-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.property-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.property-occupancy {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Property buttons */
+.property-buttons {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.property-buttons.show {
+  opacity: 1;
+  transform: translateY(0);
+  background: rgba(0,0,0,0.2);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Property badge */
+.property-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+/* No properties message */
+.no-properties {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+/* Error message styling */
+.error-message {
+  margin: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .properties-grid {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .property-card {
+    height: 200px;
+  }
+
+  .property-overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0.1) 100%);
+  }
+
+  .property-buttons {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Legacy styles for table view (if needed) */
+.property-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.property-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.table td {
+  vertical-align: middle;
+}

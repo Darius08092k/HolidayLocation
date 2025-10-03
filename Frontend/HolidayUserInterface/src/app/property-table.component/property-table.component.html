@@ -1,44 +1,46 @@
-<h2 class="text-center my-5"> Property List</h2>
+<h2 class="text-center my-5">Holiday Properties</h2>
 
-<div class="card">
-  <div class="card-header">
-    <p class="fs-5"> Overview </p>
+<div class="error-message" *ngIf="errorMessage">
+  <div class="alert alert-danger" role="alert">
+    {{errorMessage}}
+  </div>
+</div>
+
+<div class="properties-grid" *ngIf="!loading && !errorMessage">
+  <div class="property-card" *ngFor="let property of properties"
+       [style.background-image]="'url(' + (property.imageUrl || 'https://via.placeholder.com/400x300?text=' + property.name) + ')'"
+       (mouseenter)="onHover(property.id, true)"
+       (mouseleave)="onHover(property.id, false)">
+
+    <div class="property-overlay" [ngClass]="{'show': hoveredPropertyId === property.id}">
+      <div class="property-info">
+        <h3 class="property-title">{{property.name}}</h3>
+        <p class="property-price">${{property.rate}}/night</p>
+        <p class="property-occupancy">{{property.occupancy}} guests • {{property.sqft}} sq ft</p>
+      </div>
+
+      <div class="property-buttons" [ngClass]="{'show': hoveredPropertyId === property.id}">
+        <button class="btn btn-outline-light btn-sm me-2"
+                (click)="viewDetails(property)">
+          <i class="fas fa-info-circle me-1"></i>View Details
+        </button>
+        <button class="btn btn-primary btn-sm"
+                (click)="bookProperty(property)">
+          <i class="fas fa-calendar me-1"></i>Book Now
+        </button>
+      </div>
+    </div>
+
+    <div class="property-badge">
+      <span class="badge bg-success">Available</span>
+    </div>
   </div>
 
-  <div class="card-body">
-      <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Details</th>
-      <th>Rate</th>
-      <th>Occupancy</th>
-      <th>Sqft</th>
-      <th>Image</th>
-      <th>Amenity</th>
-      <th>Created Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let property of properties">
-      <td>{{property.id}} </td>
-      <td>{{property.name}} </td>
-      <td>{{property.details}} </td>
-      <td>${{property.rate}} </td>
-      <td>{{property.occupancy}} </td>
-      <td>{{property.sqft}} sq ft</td>
-      <td>
-        <img *ngIf="property.imageUrl" [src]="property.imageUrl" [alt]="property.name" class="img-thumbnail" style="width: 50px; height: 50px;">
-        <span *ngIf="!property.imageUrl">No Image</span>
-      </td>
-      <td>{{property.amenity}} </td>
-      <td>{{property.createdDate | date:'short'}} </td>
-    </tr>
-    <tr *ngIf="properties.length === 0">
-      <td colspan="9" class="text-center">No properties available</td>
-    </tr>
-  </tbody>
-</table>
+  <div class="no-properties" *ngIf="properties.length === 0">
+    <div class="text-center py-5">
+      <i class="fas fa-home fa-3x text-muted mb-3"></i>
+      <h4>No Properties Available</h4>
+      <p class="text-muted">Check back later for new holiday properties!</p>
+    </div>
   </div>
 </div>

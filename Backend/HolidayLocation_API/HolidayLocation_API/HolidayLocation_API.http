@@ -1,4 +1,4 @@
-@HolidayLocation_API_HostAddress = http://localhost:5144
+@HolidayLocation_API_HostAddress = http://0.0.0.0:5144
 
 GET {{HolidayLocation_API_HostAddress}}/weatherforecast/
 Accept: application/json
