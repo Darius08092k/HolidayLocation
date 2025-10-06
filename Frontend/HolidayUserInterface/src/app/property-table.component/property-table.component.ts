@@ -88,8 +88,8 @@ export class PropertyTableComponent {
     this.loading = true;
     this.errorMessage = '';
 
-    // Add a minimum loading time to see the custom loader
-    const minLoadingTime = 2000; // 2 seconds
+    // Add a minimum loading time to allow for API connection attempts
+    const minLoadingTime = 10000; // 10 seconds for HTTP API connection attempts
     const startTime = Date.now();
 
     this.propertyService.getProperties().subscribe(
@@ -112,6 +112,7 @@ export class PropertyTableComponent {
           console.warn('API failed, using mock data:', error);
           this.properties = this.mockProperties;
           this.loading = false;
+          this.errorMessage = 'Using mock data for testing';
         }, remainingTime);
       }
     );
@@ -125,10 +126,10 @@ export class PropertyTableComponent {
     console.warn('Failed to load image:', event.target.src);
     // Try the fallback image first, then use a placeholder if that also fails
     if (event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
-      event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
+      event.target.src = '/Images/Villa1/villa1-main.jpg';
     } else {
       // If even the fallback fails, use a basic placeholder
-      event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
+      event.target.src = '/Images/Villa1/villa1-main.jpg';
     }
   }
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../enviroment/enviroment';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, timeout } from 'rxjs/operators';
 import { Property } from '../Models/property';
 
 @Injectable({
@@ -14,13 +14,15 @@ export class PropertyService {
   private backupApiURL = environment.backupApiUrl;
 
   getProperties(): Observable<Property[]>  {
-    return this.http.get<Property[]>(`${this.backupApiURL}/PropertyAPI`)
+    return this.http.get<Property[]>(`${this.apiURL}/PropertyAPI`)
       .pipe(
+        timeout(8000), // 8 second timeout for HTTP connections
         retry(1),
         catchError((error: HttpErrorResponse) => {
           console.error('Primary API failed, trying backup...', error);
           return this.http.get<Property[]>(`${this.backupApiURL}/PropertyAPI`)
             .pipe(
+              timeout(5000), // 5 second timeout for backup
               catchError(this.handleError)
             );
         })
