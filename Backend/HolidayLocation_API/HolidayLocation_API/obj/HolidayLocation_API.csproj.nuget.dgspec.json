@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {}
+    "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj": {
+    "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
+        "projectUniqueName": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj",
         "projectName": "HolidayLocation_API",
-        "projectPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
-        "packagesPath": "C:\\Users\\dariu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\obj\\",
+        "projectPath": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj",
+        "packagesPath": "/Users/hyipurr/.nuget/packages/",
+        "outputPath": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\dariu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/hyipurr/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -98,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

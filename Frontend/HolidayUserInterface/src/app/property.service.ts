@@ -14,7 +14,7 @@ export class PropertyService {
   private backupApiURL = environment.backupApiUrl;
 
   getProperties(): Observable<Property[]>  {
-    return this.http.get<Property[]>(`${this.apiURL}/PropertyAPI`)
+    return this.http.get<Property[]>(`${this.backupApiURL}/PropertyAPI`)
       .pipe(
         retry(1),
         catchError((error: HttpErrorResponse) => {
@@ -53,11 +53,18 @@ export class PropertyService {
   }
 
   testConnection(): Observable<any> {
+    console.log('Testing localhost connection...');
     return this.http.get(`${this.apiURL}/PropertyAPI`)
       .pipe(
-        catchError(() => {
-          console.log('Trying backup API...');
-          return this.http.get(`${this.backupApiURL}/PropertyAPI`);
+        catchError((error) => {
+          console.log('Localhost failed, trying backup API...');
+          return this.http.get(`${this.backupApiURL}/PropertyAPI`)
+            .pipe(
+              catchError((backupError) => {
+                console.log('Both APIs failed:', { primary: error, backup: backupError });
+                return throwError(() => 'All APIs failed');
+              })
+            );
         })
       );
   }
