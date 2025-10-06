@@ -1,4 +1,4 @@
-﻿﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +21,35 @@ namespace HolidayLocation_API.Controllers
         {
             await _dbVilla.CreateAsync(property);
             return Ok(property);
+        }
+
+        [HttpPost("upload-image/{propertyId:int}")]
+        public async Task<IActionResult> UploadPropertyImage(int propertyId, IFormFile imageFile)
+        {
+            try
+            {
+                // Generate unique filename
+                var fileName = $"property_{propertyId}_{Guid.NewGuid()}{fileExtension}";
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                // Save the file
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(fileStream);
+                }
+
+                // Update property with image URL
+                var imageUrl = $"/images/{fileName}";
+                property.ImageUrl = imageUrl;
+                await _dbVilla.UpdatePropertyAsync(property);
+
+                return Ok(new { imageUrl = imageUrl, fileName = fileName });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error uploading image: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -78,6 +107,61 @@ namespace HolidayLocation_API.Controllers
 
             var updatedProperty = await _dbVilla.UpdatePropertyAsync(property);
             return Ok(updatedProperty);
+        }
+
+        [HttpGet("image/{propertyId:int}")]
+        public async Task<IActionResult> GetPropertyImage(int propertyId)
+        {
+            var property = await _dbVilla.GetByIdAsync(propertyId);
+            if (property == null)
+            {
+                return NotFound($"Property with ID {propertyId} not found");
+            }
+
+            if (string.IsNullOrEmpty(property.ImageUrl))
+            {
+                return NotFound("No image found for this property");
+            }
+
+            return Ok(new { imageUrl = property.ImageUrl });
+        }
+
+        [HttpDelete("image/{propertyId:int}")]
+        public async Task<IActionResult> DeletePropertyImage(int propertyId)
+        {
+            var property = await _dbVilla.GetByIdAsync(propertyId);
+            if (property == null)
+            {
+                return NotFound($"Property with ID {propertyId} not found");
+            }
+
+            if (string.IsNullOrEmpty(property.ImageUrl))
+            {
+                return NotFound("No image found for this property");
+            }
+
+            try
+            {
+                // Extract filename from ImageUrl
+                var fileName = Path.GetFileName(property.ImageUrl);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                // Delete physical file if it exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                // Clear ImageUrl from property
+                property.ImageUrl = string.Empty;
+                await _dbVilla.UpdatePropertyAsync(property);
+
+                return Ok(new { message = "Image deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error deleting image: {ex.Message}");
+            }
         }
 
     }

@@ -4475,24 +4475,31 @@
     ]
   },
   "packageFolders": {
-    "/Users/hyipurr/.nuget/packages/": {}
+    "C:\\Users\\dariu\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj",
+      "projectUniqueName": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
       "projectName": "HolidayLocation_API",
-      "projectPath": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/HolidayLocation_API.csproj",
-      "packagesPath": "/Users/hyipurr/.nuget/packages/",
-      "outputPath": "/Users/hyipurr/Desktop/Projects/HolidayLocation/Backend/HolidayLocation_API/HolidayLocation_API/obj/",
+      "projectPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\HolidayLocation_API.csproj",
+      "packagesPath": "C:\\Users\\dariu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dariu\\Desktop\\C#\\Projects\\HolidayLocation\\Backend\\HolidayLocation_API\\HolidayLocation_API\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/hyipurr/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\dariu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4565,7 +4572,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
