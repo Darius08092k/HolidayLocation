@@ -26,32 +26,6 @@ namespace HolidayLocation_API.Controllers
         [HttpPost("upload-image/{propertyId:int}")]
         public async Task<IActionResult> UploadPropertyImage(int propertyId, IFormFile imageFile)
         {
-            if (imageFile == null || imageFile.Length == 0)
-            {
-                return BadRequest("No image file provided");
-            }
-
-            // Check if property exists
-            var property = await _dbVilla.GetByIdAsync(propertyId);
-            if (property == null)
-            {
-                return NotFound($"Property with ID {propertyId} not found");
-            }
-
-            // Validate file type
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-            var fileExtension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-            if (!allowedExtensions.Contains(fileExtension))
-            {
-                return BadRequest("Invalid file type. Only JPG, JPEG, PNG, GIF, and WEBP files are allowed.");
-            }
-
-            // Validate file size (max 5MB)
-            if (imageFile.Length > 5 * 1024 * 1024)
-            {
-                return BadRequest("File size cannot exceed 5MB");
-            }
-
             try
             {
                 // Generate unique filename
