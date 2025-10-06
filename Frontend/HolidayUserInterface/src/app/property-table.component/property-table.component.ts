@@ -55,27 +55,26 @@ export class PropertyTableComponent {
     },
     {
       id: 4,
-      name: "Seaside Villa",
-      details: "Beautiful oceanfront property with stunning views and private beach access",
-      rate: 350.00,
-      occupancy: 6,
-      sqft: 2500,
+      name: "Luxury Estate",
+      details: "Expansive property with premium amenities and spacious layout",
+      rate: 450.00,
+      occupancy: 8,
+      sqft: 3500,
       imageUrl: "/Images/Villa1/villa1-main.jpg",
-      amenity: "Pool, Beach Access, WiFi, Kitchen, Parking",
-      createdDate: new Date('2024-01-15')
+      amenity: "Pool, Spa, WiFi, Kitchen, Parking, Garden",
+      createdDate: new Date('2024-01-20')
     },
     {
-      id: 6,
-      name: "Mountain Retreat",
-      details: "Cozy cabin nestled in the mountains with hiking trails nearby",
-      rate: 225.00,
+      id: 5,
+      name: "Countryside Cottage",
+      details: "Peaceful rural setting with traditional charm and modern comfort",
+      rate: 175.00,
       occupancy: 4,
-      sqft: 1800,
+      sqft: 1600,
       imageUrl: "/Images/Villa1/villa1-main.jpg",
-      amenity: "Fireplace, Hiking, WiFi, Kitchen, Hot Tub",
-      createdDate: new Date('2024-02-10')
+      amenity: "Fireplace, Garden, WiFi, Kitchen",
+      createdDate: new Date('2024-02-15')
     }
-
   ];
 
   constructor(private propertyService: PropertyService, private router: Router) { }
@@ -100,7 +99,7 @@ export class PropertyTableComponent {
         setTimeout(() => {
           this.properties = data;
           this.loading = false;
-          console.log('Properties fetched successfully:', data);
+          console.log('Properties fetched successfully:', this.properties);
           this.errorMessage = '';
         }, remainingTime);
       },
@@ -124,12 +123,17 @@ export class PropertyTableComponent {
 
   onImageError(event: any): void {
     console.warn('Failed to load image:', event.target.src);
-    // Try the fallback image first, then use a placeholder if that also fails
-    if (event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
+
+    // Simple fallback hierarchy: villa1 -> online fallback -> placeholder
+    if (!event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
+      // First fallback: try Villa1 image
       event.target.src = '/Images/Villa1/villa1-main.jpg';
+    } else if (!event.target.src.includes('images.unsplash.com')) {
+      // Second fallback: try online image
+      event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
     } else {
-      // If even the fallback fails, use a basic placeholder
-      event.target.src = '/Images/Villa1/villa1-main.jpg';
+      // Final fallback: placeholder
+      event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
     }
   }
 
