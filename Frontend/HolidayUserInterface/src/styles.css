@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Remove default browser margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure body has no margin or padding */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Make navbar stick to the top */
+.navbar {
+  margin-top: 0;
+  padding-top: 0;
+}

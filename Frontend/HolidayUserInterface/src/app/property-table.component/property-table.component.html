@@ -6,11 +6,23 @@
   </div>
 </div>
 
+<div class="loading-container" *ngIf="loading">
+  <div class="loader">
+    <span class="loader-text">loading</span>
+    <span class="load"></span>
+  </div>
+</div>
+
 <div class="properties-grid" *ngIf="!loading && !errorMessage">
   <div class="property-card" *ngFor="let property of properties"
-       [style.background-image]="'url(' + (property.imageUrl || 'https://via.placeholder.com/400x300?text=' + property.name) + ')'"
        (mouseenter)="onHover(property.id, true)"
        (mouseleave)="onHover(property.id, false)">
+
+    <!-- Background Image -->
+    <img [src]="property.imageUrl"
+         [alt]="property.name"
+         class="property-image-bg"
+         (error)="onImageError($event)">
 
     <div class="property-overlay" [ngClass]="{'show': hoveredPropertyId === property.id}">
       <div class="property-info">
@@ -22,11 +34,11 @@
       <div class="property-buttons" [ngClass]="{'show': hoveredPropertyId === property.id}">
         <button class="btn btn-outline-light btn-sm me-2"
                 (click)="viewDetails(property)">
-          <i class="fas fa-info-circle me-1"></i>View Details
+          View Details
         </button>
         <button class="btn btn-primary btn-sm"
                 (click)="bookProperty(property)">
-          <i class="fas fa-calendar me-1"></i>Book Now
+          Book Now
         </button>
       </div>
     </div>
@@ -38,7 +50,6 @@
 
   <div class="no-properties" *ngIf="properties.length === 0">
     <div class="text-center py-5">
-      <i class="fas fa-home fa-3x text-muted mb-3"></i>
       <h4>No Properties Available</h4>
       <p class="text-muted">Check back later for new holiday properties!</p>
     </div>

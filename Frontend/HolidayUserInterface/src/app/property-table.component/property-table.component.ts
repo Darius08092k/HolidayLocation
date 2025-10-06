@@ -52,7 +52,30 @@ export class PropertyTableComponent {
       imageUrl: "/Images/Villa1/villa1-main.jpg",
       amenity: "WiFi, Gym Access, Rooftop Terrace, Kitchen",
       createdDate: new Date('2024-03-05')
+    },
+    {
+      id: 4,
+      name: "Seaside Villa",
+      details: "Beautiful oceanfront property with stunning views and private beach access",
+      rate: 350.00,
+      occupancy: 6,
+      sqft: 2500,
+      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      amenity: "Pool, Beach Access, WiFi, Kitchen, Parking",
+      createdDate: new Date('2024-01-15')
+    },
+    {
+      id: 6,
+      name: "Mountain Retreat",
+      details: "Cozy cabin nestled in the mountains with hiking trails nearby",
+      rate: 225.00,
+      occupancy: 4,
+      sqft: 1800,
+      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      amenity: "Fireplace, Hiking, WiFi, Kitchen, Hot Tub",
+      createdDate: new Date('2024-02-10')
     }
+
   ];
 
   constructor(private propertyService: PropertyService, private router: Router) { }
@@ -65,34 +88,48 @@ export class PropertyTableComponent {
     this.loading = true;
     this.errorMessage = '';
 
+    // Add a minimum loading time to see the custom loader
+    const minLoadingTime = 2000; // 2 seconds
+    const startTime = Date.now();
+
     this.propertyService.getProperties().subscribe(
       (data: Property[]) => {
-        this.properties = data;
-        this.loading = false;
-        console.log('Properties fetched successfully:', data);
-        // Clear any previous error messages on successful API call
-        this.errorMessage = '';
+        const elapsed = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadingTime - elapsed);
+
+        setTimeout(() => {
+          this.properties = data;
+          this.loading = false;
+          console.log('Properties fetched successfully:', data);
+          this.errorMessage = '';
+        }, remainingTime);
       },
       (error) => {
-        // If API fails, use mock data silently for development
-        console.warn('API failed, using mock data:', error);
-        this.properties = this.mockProperties;
-        this.loading = false;
-        // Only show error in development mode or if needed for debugging
-        // this.errorMessage = 'API unavailable - displaying sample properties';
+        const elapsed = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadingTime - elapsed);
+
+        setTimeout(() => {
+          console.warn('API failed, using mock data:', error);
+          this.properties = this.mockProperties;
+          this.loading = false;
+        }, remainingTime);
       }
     );
   }
 
-  // Method to manually use mock data for testing
-  useMockData(): void {
-    this.properties = this.mockProperties;
-    this.errorMessage = 'Manual mock data loaded for testing';
-    console.log('Loaded mock properties:', this.mockProperties);
-  }
-
   onHover(propertyId: number, isHovered: boolean): void {
     this.hoveredPropertyId = isHovered ? propertyId : null;
+  }
+
+  onImageError(event: any): void {
+    console.warn('Failed to load image:', event.target.src);
+    // Try the fallback image first, then use a placeholder if that also fails
+    if (event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
+      event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
+    } else {
+      // If even the fallback fails, use a basic placeholder
+      event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
+    }
   }
 
   viewDetails(property: Property): void {
