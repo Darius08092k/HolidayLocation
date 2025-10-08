@@ -14,12 +14,12 @@ export class PropertyTableComponent {
   protected readonly title = 'Property Gallery Component';
 
   properties: Property[] = [];
-  errorMessage: string = '';
   loading: boolean = false;
   hoveredPropertyId: number | null = null;
+  usingMockData: boolean = false;
 
   // Mock data for testing when API is not available
-  private mockProperties: Property[] = [
+  public static mockProperties: Property[] = [
     {
       id: 1,
       name: "Seaside Villa",
@@ -85,7 +85,7 @@ export class PropertyTableComponent {
 
   fetchProperties(): void {
     this.loading = true;
-    this.errorMessage = '';
+    this.usingMockData = false;
 
     // Add a minimum loading time to allow for API connection attempts
     const minLoadingTime = 10000; // 10 seconds for HTTP API connection attempts
@@ -99,8 +99,8 @@ export class PropertyTableComponent {
         setTimeout(() => {
           this.properties = data;
           this.loading = false;
+          this.usingMockData = false;
           console.log('Properties fetched successfully:', this.properties);
-          this.errorMessage = '';
         }, remainingTime);
       },
       (error) => {
@@ -109,9 +109,9 @@ export class PropertyTableComponent {
 
         setTimeout(() => {
           console.warn('API failed, using mock data:', error);
-          this.properties = this.mockProperties;
+          this.properties = PropertyTableComponent.mockProperties;
           this.loading = false;
-          this.errorMessage = 'Using mock data for testing';
+          this.usingMockData = true;
         }, remainingTime);
       }
     );
@@ -139,19 +139,8 @@ export class PropertyTableComponent {
 
   viewDetails(property: Property): void {
     console.log('Viewing details for:', property.name);
-    // TODO: Navigate to property details page
-    // this.router.navigate(['/property', property.id]);
-
-    // For now, show property details in an alert
-    const details = `
-Property: ${property.name}
-Rate: $${property.rate}/night
-Occupancy: ${property.occupancy} guests
-Size: ${property.sqft} sq ft
-Amenities: ${property.amenity}
-Details: ${property.details}
-    `;
-    alert(details);
+    // Navigate to property details page
+    this.router.navigate(['/property', property.id]);
   }
 
   bookProperty(property: Property): void {

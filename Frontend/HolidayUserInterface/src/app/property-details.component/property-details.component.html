@@ -1,1 +1,101 @@
-<p>property-details.component works!</p>
+<div class="container-fluid px-3 py-4">
+  <!-- Back button -->
+  <div class="mb-3">
+    <button class="btn btn-outline-secondary" (click)="goBack()">
+      <i class="bi bi-arrow-left"></i> Back to Properties
+    </button>
+  </div>
+
+  <!-- Loading state -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div class="error-message" *ngIf="errorMessage && !loading">
+    <div class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+  </div>
+
+  <!-- Property details -->
+  <div class="property-details" *ngIf="property && !loading">
+    <div class="row">
+      <!-- Property image -->
+      <div class="col-lg-6 mb-4">
+        <div class="property-image-container">
+          <img [src]="property.imageUrl"
+               [alt]="property.name"
+               class="img-fluid rounded shadow"
+               (error)="onImageError($event)">
+        </div>
+      </div>
+
+      <!-- Property information -->
+      <div class="col-lg-6">
+        <div class="property-info">
+          <h1 class="display-5 mb-3">{{property.name}}</h1>
+
+          <div class="row mb-4">
+            <div class="col-sm-6">
+              <div class="info-card">
+                <h5 class="text-primary">Rate</h5>
+                <p class="h3">${{property.rate}}<small class="text-muted">/night</small></p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="info-card">
+                <h5 class="text-primary">Occupancy</h5>
+                <p class="h5">{{property.occupancy}} guests</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-sm-6">
+              <div class="info-card">
+                <h5 class="text-primary">Size</h5>
+                <p class="h5">{{property.sqft}} sq ft</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="info-card">
+                <h5 class="text-primary">Available Since</h5>
+                <p class="h6">{{property.createdDate | date:'mediumDate'}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary">Description</h5>
+            <p class="lead">{{property.details}}</p>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary">Amenities</h5>
+            <div class="amenities-list">
+              <span class="badge bg-secondary me-2 mb-2"
+                    *ngFor="let amenity of property.amenity.split(', ')">
+                {{amenity}}
+              </span>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-buttons mt-4">
+            <button class="btn btn-primary btn-lg me-3" (click)="bookProperty()">
+              <i class="bi bi-calendar-check"></i> Book Now
+            </button>
+            <button class="btn btn-outline-primary btn-lg" (click)="goBack()">
+              <i class="bi bi-list"></i> View All Properties
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

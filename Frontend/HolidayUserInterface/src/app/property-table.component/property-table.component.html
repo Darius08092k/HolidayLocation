@@ -1,10 +1,10 @@
-<h2 class="text-center my-5">Holiday Properties</h2>
 
-<div class="error-message" *ngIf="errorMessage">
-  <div class="alert alert-danger" role="alert">
-    {{errorMessage}}
+<div class="mock-data-alert" *ngIf="usingMockData">
+  <div class="alert alert-info" role="alert">
+    <i class="fas fa-info-circle"></i> Using Mock Data - API connection unavailable
   </div>
 </div>
+
 
 <div class="loading-container" *ngIf="loading">
   <div class="loader">
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div class="properties-grid" *ngIf="!loading && !errorMessage">
+<div class="properties-grid" *ngIf="!loading">
   <div class="property-card" *ngFor="let property of properties"
        (mouseenter)="onHover(property.id, true)"
        (mouseleave)="onHover(property.id, false)">
