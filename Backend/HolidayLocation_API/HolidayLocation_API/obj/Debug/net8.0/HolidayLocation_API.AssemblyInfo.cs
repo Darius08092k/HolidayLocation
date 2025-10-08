@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HolidayLocation_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64d2dbb5d27a8e74e947ba4918466913d740a4b0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71514616d14c8e694e5390c45cf65a728e882c3b")]
 [assembly: System.Reflection.AssemblyProductAttribute("HolidayLocation_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HolidayLocation_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

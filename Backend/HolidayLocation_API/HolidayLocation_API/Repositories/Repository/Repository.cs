@@ -19,6 +19,13 @@ namespace HolidayLocation_API.Repositories.Repository
             await SaveAsync();
         }
 
+        public Task DeleteAllAsync()
+        {
+            var entities = _context.Set<T>();
+            _context.Set<T>().RemoveRange(entities);
+            return SaveAsync();
+        }
+
         public async Task DeleteAsync(int id)
         {
             var property = await _context.Set<T>().FindAsync(id);

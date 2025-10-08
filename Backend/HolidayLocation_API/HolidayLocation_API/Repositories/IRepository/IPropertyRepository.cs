@@ -6,5 +6,6 @@ namespace HolidayLocation_API.Repositories.IRepository
     {
         Task<Property> UpdatePropertyAsync(Property property);
         Task<bool> PropertyExistsAsync(int id);
+        Task<int> GetNextAvailableIdAsync();
     }
 }

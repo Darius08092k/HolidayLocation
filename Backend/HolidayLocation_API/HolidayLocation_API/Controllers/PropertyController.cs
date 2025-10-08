@@ -19,6 +19,10 @@ namespace HolidayLocation_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Property>> CreateProperty(Property property)
         {
+            // Find the next available ID
+            var nextId = await _dbVilla.GetNextAvailableIdAsync();
+            property.Id = nextId;
+
             await _dbVilla.CreateAsync(property);
             return Ok(property);
         }
@@ -50,6 +54,13 @@ namespace HolidayLocation_API.Controllers
                 return NotFound();
             }
             await _dbVilla.DeleteAsync(id);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAllProperty(int id)
+        {
+            await _dbVilla.DeleteAllAsync();
             return NoContent();
         }
 

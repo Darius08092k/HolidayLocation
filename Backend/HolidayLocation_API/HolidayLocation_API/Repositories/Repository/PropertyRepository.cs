@@ -24,5 +24,30 @@ namespace HolidayLocation_API.Repositories.Repository
         {
             return await _db.Property.AsNoTracking().AnyAsync(p => p.Id == id);
         }
+
+        public async Task<int> GetNextAvailableIdAsync()
+        {
+            var existingIds = await _db.Property
+                .Select(p => p.Id)
+                .OrderBy(id => id)
+                .ToListAsync();
+
+            if(!existingIds.Any())
+            {
+                return 1; // Start IDs from 1 if no properties exist
+            }
+
+            int nextId = 1;
+            foreach (var id in existingIds)
+            {
+                if (id != nextId)
+                {
+                    return nextId;
+                }
+                nextId++;
+            }
+
+            return existingIds.Max() + 1; // Return the next ID after the highest existing ID
+        }
     }
 }
