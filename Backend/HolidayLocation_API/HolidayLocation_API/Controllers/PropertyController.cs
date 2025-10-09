@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +19,6 @@ namespace HolidayLocation_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Property>> CreateProperty(Property property)
         {
-            // Find the next available ID
-            var nextId = await _dbVilla.GetNextAvailableIdAsync();
-            property.Id = nextId;
-
             await _dbVilla.CreateAsync(property);
             return Ok(property);
         }
@@ -45,7 +41,7 @@ namespace HolidayLocation_API.Controllers
             return Ok(villa);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteProperty(int id)
         {
             var villa = await _dbVilla.GetByIdAsync(id);
@@ -54,13 +50,6 @@ namespace HolidayLocation_API.Controllers
                 return NotFound();
             }
             await _dbVilla.DeleteAsync(id);
-            return NoContent();
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAllProperty(int id)
-        {
-            await _dbVilla.DeleteAllAsync();
             return NoContent();
         }
 
@@ -89,6 +78,13 @@ namespace HolidayLocation_API.Controllers
 
             var updatedProperty = await _dbVilla.UpdatePropertyAsync(property);
             return Ok(updatedProperty);
+        }
+
+        [HttpDelete("all")]
+        public async Task<IActionResult> DeleteAllProperty()
+        {
+            await _dbVilla.DeleteAllAsync();
+            return NoContent();
         }
 
     }
