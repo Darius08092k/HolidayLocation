@@ -55,12 +55,13 @@ namespace HolidayLocation_API
 
             app.UseHttpsRedirection();
 
+            app.UseCors("PropetiesCORS");
+
             // Enable static file serving for images
             app.UseStaticFiles();
 
             app.UseAuthorization();
 
-            app.UseCors("PropetiesCORS");
 
             app.MapControllers();
 

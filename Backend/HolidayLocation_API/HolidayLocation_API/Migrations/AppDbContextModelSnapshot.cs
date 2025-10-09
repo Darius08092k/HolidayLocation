@@ -54,68 +54,6 @@ namespace HolidayLocation_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Property");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amenity = "Pool, Beach Access, WiFi, Kitchen, Parking",
-                            CreatedDate = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Details = "Beautiful oceanfront property with stunning views and private beach access",
-                            ImageUrl = "/Images/Villa1/villa1-main.jpg",
-                            Name = "Seaside Villa",
-                            Occupancy = 6,
-                            Rate = 350.0,
-                            Sqft = 2500
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amenity = "Fireplace, Hiking, WiFi, Kitchen, Hot Tub",
-                            CreatedDate = new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Details = "Cozy cabin nestled in the mountains with hiking trails nearby",
-                            ImageUrl = "/Images/Villa1/villa1-main.jpg",
-                            Name = "Mountain Retreat",
-                            Occupancy = 4,
-                            Rate = 225.0,
-                            Sqft = 1800
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amenity = "WiFi, Gym Access, Rooftop Terrace, Kitchen",
-                            CreatedDate = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Details = "Modern downtown loft with city skyline views and rooftop access",
-                            ImageUrl = "/Images/Villa1/villa1-main.jpg",
-                            Name = "City Loft",
-                            Occupancy = 2,
-                            Rate = 180.0,
-                            Sqft = 1200
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Amenity = "Pool, Spa, WiFi, Kitchen, Parking, Garden",
-                            CreatedDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Details = "Expansive property with premium amenities and spacious layout",
-                            ImageUrl = "/Images/Villa1/villa1-main.jpg",
-                            Name = "Luxury Estate",
-                            Occupancy = 8,
-                            Rate = 450.0,
-                            Sqft = 3500
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Amenity = "Fireplace, Garden, WiFi, Kitchen",
-                            CreatedDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Details = "Peaceful rural setting with traditional charm and modern comfort",
-                            ImageUrl = "/Images/Villa1/villa1-main.jpg",
-                            Name = "Countryside Cottage",
-                            Occupancy = 4,
-                            Rate = 175.0,
-                            Sqft = 1600
-                        });
                 });
 #pragma warning restore 612, 618
         }

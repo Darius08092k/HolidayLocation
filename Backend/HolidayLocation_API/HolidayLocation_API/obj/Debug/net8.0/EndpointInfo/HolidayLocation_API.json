@@ -61,15 +61,19 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/api/PropertyAPI/{id}": {
+      "get": {
         "tags": [
           "Property"
         ],
+        "operationId": "GetProperty",
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -81,14 +85,11 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/PropertyAPI/{id}": {
-      "get": {
+      },
+      "delete": {
         "tags": [
           "Property"
         ],
-        "operationId": "GetProperty",
         "parameters": [
           {
             "name": "id",
@@ -140,6 +141,30 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PropertyAPI/all": {
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PropertyAPI/seed-image-urls": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
         "responses": {
           "200": {
             "description": "OK"

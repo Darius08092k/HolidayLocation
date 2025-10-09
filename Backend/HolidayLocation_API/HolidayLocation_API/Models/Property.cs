@@ -14,6 +14,8 @@ namespace HolidayLocation_API.Models
         public double Rate { get; set; }
         public int Occupancy { get; set; }
         public int Sqft { get; set; }
+
+        // Store relative path to the image
         public string ImageUrl { get; set; }
         public string Amenity { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;

@@ -37,38 +37,6 @@
   },
   {
     "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
-    "Method": "DeleteProperty",
-    "RelativePath": "api/PropertyAPI",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
-    "Method": "DeleteAllProperty",
-    "RelativePath": "api/PropertyAPI",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
     "Method": "GetProperty",
     "RelativePath": "api/PropertyAPI/{id}",
     "HttpMethod": "GET",
@@ -83,6 +51,22 @@
     ],
     "ReturnTypes": [],
     "EndpointName": "GetProperty"
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "DeleteProperty",
+    "RelativePath": "api/PropertyAPI/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
@@ -103,6 +87,26 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "DeleteAllProperty",
+    "RelativePath": "api/PropertyAPI/all",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
+    "Method": "SeedImageUrls",
+    "RelativePath": "api/PropertyAPI/seed-image-urls",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

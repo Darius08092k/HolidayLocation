@@ -87,5 +87,32 @@ namespace HolidayLocation_API.Controllers
             return NoContent();
         }
 
+        [HttpPost("seed-image-urls")]
+        public async Task<IActionResult> SeedImageUrls()
+        {
+            // Get all properties
+            var properties = await _dbVilla.GetAllAsync();
+
+            // Update specific properties with image URLs
+            var updates = new Dictionary<int, string>
+            {
+                { 1, "/Images/Villa1/villa1-main.jpg" },
+                { 2, "/Images/Villa2/villa2-main.jpg" },
+                { 3, "/Images/Villa3/villa3-main.jpg" }
+            };
+
+            foreach (var property in properties)
+            {
+                if (updates.ContainsKey(property.Id))
+                {
+                    property.ImageUrl = updates[property.Id];
+                    await _dbVilla.UpdatePropertyAsync(property);
+                }
+            }
+
+            return Ok(new { message = "Image URLs updated successfully", updatedCount = updates.Count });
+        }
+
+
     }
 }
