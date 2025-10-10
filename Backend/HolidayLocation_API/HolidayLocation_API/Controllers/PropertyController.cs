@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,11 @@ namespace HolidayLocation_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Property>> CreateProperty(Property property)
         {
+            // Get next property ID
+            var nextId = await _dbVilla.GetNextAvailableIdAsync();
+            property.Id = nextId;
+
+            
             await _dbVilla.CreateAsync(property);
             return Ok(property);
         }
@@ -96,9 +101,9 @@ namespace HolidayLocation_API.Controllers
             // Update specific properties with image URLs
             var updates = new Dictionary<int, string>
             {
-                { 1, "/Images/Villa1/villa1-main.jpg" },
-                { 2, "/Images/Villa2/villa2-main.jpg" },
-                { 3, "/Images/Villa3/villa3-main.jpg" }
+                { 1, "/images/Villa1/villa1-main.jpg" },
+                { 2, "/images/Villa2/villa2-main.jpg" },
+                { 3, "/images/Villa3/villa3-main.jpg" }
             };
 
             foreach (var property in properties)
