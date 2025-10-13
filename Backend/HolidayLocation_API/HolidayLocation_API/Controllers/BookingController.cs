@@ -1,6 +1,7 @@
 ﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Writers;
 using System.Net.NetworkInformation;
 
 namespace HolidayLocation_API.Controllers
@@ -58,6 +59,65 @@ namespace HolidayLocation_API.Controllers
             var bookingList = await _bookingRepository.GetAllAsync();
             return Ok(bookingList);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Booking>> GetBooking(int id)
+        {
+            var booking = await _bookingRepository.GetByIdAsync(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            return Ok(booking);
+        }
+
+        [HttpGet("property/{propertyId}")]
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookingsByPropertyId(int propertyId)
+        {
+            var bookings = await _bookingRepository.GetBookingByPropertyIdAsync(propertyId);
+            return Ok(bookings);
+        }
+
+        [HttpGet("property/{propertyId}/availability")]
+        public async Task<ActionResult<bool>> CheckPropertyAvailability(int propertyId, 
+                                                DateTime checkIn, 
+                                                DateTime checkOut)
+        {
+            if(checkIn >= checkOut)
+            {
+                return BadRequest("Check-out date must be later than check-in date.");
+            }
+
+            var isAvailable = await _bookingRepository.IsPorpertyAvailableAsync(propertyId, checkIn, checkOut);
+            return Ok(isAvailable);
+        }
+
+        [HttpGet("property/{propertyId}/bookedDates")]
+        public async Task<ActionResult<IEnumerable<DateTime>>> GetBookedDates(int propertyId,
+                                                DateTime startDate,
+                                                DateTime endDate)
+        {
+            if (startDate >= endDate)
+            {
+                return BadRequest("End date must be later than start date.");
+            }
+
+            var bookedDates = await _bookingRepository.GetBookedDatesAsync(propertyId, startDate, endDate);
+            return Ok(bookedDates);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteBooking(int id)
+        {
+            var booking = await _bookingRepository.GetByIdAsync(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            await _bookingRepository.DeleteAsync(id);
+            return NoContent();
+        }
+
 
     }
 }

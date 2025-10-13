@@ -34,7 +34,8 @@ namespace HolidayLocation_API
                             "http://192.168.1.140:4200",
                             "https://192.168.1.140:4200")
                         .AllowAnyHeader()
-                        .AllowAnyMethod());
+                        .AllowAnyMethod()
+                        .AllowCredentials());
             });
 
             builder.Services.AddControllers();
