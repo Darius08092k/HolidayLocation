@@ -30,6 +30,16 @@ namespace HolidayLocation_API.Controllers
                 return BadRequest(ModelState);
             }
 
+            var propertyExists = await _propertyRepository.PropertyExistsAsync(booking.PropertyId);
+            if (!propertyExists)
+            {
+                return NotFound($"Property with ID {booking.PropertyId} not found.");
+            }
+
+            // Ignore any nested property object and let DB generate BookingId
+            booking.Property = null;
+            booking.BookingId = 0;
+
             var isAvailable = await _bookingRepository.IsPorpertyAvailableAsync(
                 booking.PropertyId, booking.CheckInDate, booking.CheckOutDate);
 
