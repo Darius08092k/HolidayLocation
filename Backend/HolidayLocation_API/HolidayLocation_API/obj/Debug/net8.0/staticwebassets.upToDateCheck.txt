@@ -1,5 +1,5 @@
-wwwroot\images\Villa5\villa5-main.jpg
-wwwroot\images\Villa4\villa4-main.jpg
-wwwroot\images\Villa3\villa3-main.jpg
-wwwroot\images\Villa2\villa2-main.jpg
 wwwroot\images\Villa1\villa1-main.jpg
+wwwroot\images\Villa2\villa2-main.jpg
+wwwroot\images\Villa3\villa3-main.jpg
+wwwroot\images\Villa4\villa4-main.jpg
+wwwroot\images\Villa5\villa5-main.jpg

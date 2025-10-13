@@ -103,7 +103,9 @@ namespace HolidayLocation_API.Controllers
             {
                 { 1, "/images/Villa1/villa1-main.jpg" },
                 { 2, "/images/Villa2/villa2-main.jpg" },
-                { 3, "/images/Villa3/villa3-main.jpg" }
+                { 3, "/images/Villa3/villa3-main.jpg" },
+                { 4, "/images/Villa4/villa4-main.jpg" },
+                { 5, "/images/Villa5/villa5-main.jpg" }
             };
 
             foreach (var property in properties)
