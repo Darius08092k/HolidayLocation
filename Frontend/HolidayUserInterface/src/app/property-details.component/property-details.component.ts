@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Property } from '../../Models/property';
-import { PropertyService } from '../property.service';
+import { PropertyService } from '../services/property/property.service';
 import { PropertyTableComponent } from '../property-table.component/property-table.component';
 import { environment } from '../../enviroment/enviroment';
 
