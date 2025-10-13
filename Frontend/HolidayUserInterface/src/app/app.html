@@ -12,8 +12,14 @@
     <!-- Search Section - always visible on right, positioned absolutely on mobile -->
     <div class="d-flex position-relative">
       <div class="input-group">
-        <input type="search" class="form-control" placeholder="Search properties..." aria-label="Search">
-        <button class="btn btn-primary" type="button">
+        <input type="search"
+               class="form-control"
+               placeholder="Search properties..."
+               aria-label="Search"
+               [(ngModel)]="searchQuery"
+               (input)="onSearchInputChange()"
+               (keyup.enter)="onSearch()">
+        <button class="btn btn-primary" type="button" (click)="onSearch()">
           Search
         </button>
       </div>

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Property } from '../../Models/property';
 import { PropertyService } from '../property.service';
+import { SearchService } from '../search.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../enviroment/enviroment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-property-table.component',
@@ -11,13 +13,16 @@ import { environment } from '../../enviroment/enviroment';
   templateUrl: './property-table.component.html',
   styleUrl: './property-table.component.css'
 })
-export class PropertyTableComponent {
+export class PropertyTableComponent implements OnInit, OnDestroy {
   protected readonly title = 'Property Gallery Component';
 
   properties: Property[] = [];
+  filteredProperties: Property[] = [];  // Filtered list based on search
+  allProperties: Property[] = [];  // Store all properties for filtering
   loading: boolean = false;
   hoveredPropertyId: number | null = null;
   usingMockData: boolean = false;
+  private searchSubscription!: Subscription;
 
   // Mock data for testing when API is not available
   public static mockProperties: Property[] = [
@@ -78,10 +83,38 @@ export class PropertyTableComponent {
     }
   ];
 
-  constructor(private propertyService: PropertyService, private router: Router) { }
+  constructor(private propertyService: PropertyService, private router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.fetchProperties();
+
+    // Subscribe to search term changes
+    this.searchSubscription = this.searchService.searchTerm$.subscribe(term => {
+      this.filterProperties(term);
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  filterProperties(searchTerm: string): void {
+    if (!searchTerm || searchTerm.trim() === '') {
+      // If no search term, show all properties
+      this.filteredProperties = [...this.allProperties];
+    } else {
+      const term = searchTerm.toLowerCase().trim();
+      this.filteredProperties = this.allProperties.filter(property =>
+        property.name.toLowerCase().includes(term) ||
+        property.details.toLowerCase().includes(term) ||
+        property.amenity.toLowerCase().includes(term) ||
+        property.rate.toString().includes(term)
+      );
+      console.log(`Filtered ${this.filteredProperties.length} properties for term: "${searchTerm}"`);
+    }
   }
 
   fetchProperties(): void {
@@ -89,7 +122,7 @@ export class PropertyTableComponent {
     this.usingMockData = false;
 
     // Add a minimum loading time to allow for API connection attempts
-    const minLoadingTime = 10000; // 10 seconds for HTTP API connection attempts
+    const minLoadingTime = 5000; // 5 seconds for HTTP API connection attempts
     const startTime = Date.now();
 
     this.propertyService.getProperties().subscribe(
@@ -98,10 +131,17 @@ export class PropertyTableComponent {
         const remainingTime = Math.max(0, minLoadingTime - elapsed);
 
         setTimeout(() => {
-          this.properties = this.propertyService.updatePropertyImageUrls(data);
+          this.allProperties = this.propertyService.updatePropertyImageUrls(data);
+          this.properties = [...this.allProperties];
+          this.filteredProperties = [...this.allProperties];
           this.loading = false;
           this.usingMockData = false;
           console.log('Properties fetched successfully:', this.properties);
+          // Apply any existing search filter
+          const currentSearch = this.searchService.getSearchTerm();
+          if (currentSearch) {
+            this.filterProperties(currentSearch);
+          }
         }, remainingTime);
       },
       (error) => {
@@ -110,9 +150,16 @@ export class PropertyTableComponent {
 
         setTimeout(() => {
           console.warn('API failed, using mock data:', error);
-          this.properties = PropertyTableComponent.mockProperties;
+          this.allProperties = PropertyTableComponent.mockProperties;
+          this.properties = [...this.allProperties];
+          this.filteredProperties = [...this.allProperties];
           this.loading = false;
           this.usingMockData = true;
+          // Apply any existing search filter
+          const currentSearch = this.searchService.getSearchTerm();
+          if (currentSearch) {
+            this.filterProperties(currentSearch);
+          }
         }, remainingTime);
       }
     );

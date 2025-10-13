@@ -14,7 +14,7 @@
 </div>
 
 <div class="properties-grid" *ngIf="!loading">
-  <div class="property-card" *ngFor="let property of properties"
+  <div class="property-card" *ngFor="let property of filteredProperties"
        (mouseenter)="onHover(property.id, true)"
        (mouseleave)="onHover(property.id, false)">
 
@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <div class="no-properties" *ngIf="properties.length === 0">
+  <div class="no-properties" *ngIf="filteredProperties.length === 0">
     <div class="text-center py-5">
       <h4>No Properties Available</h4>
       <p class="text-muted">Check back later for new holiday properties!</p>
