@@ -10,7 +10,7 @@ namespace HolidayLocation_API.Models
         [Required]
         public int PropertyId { get; set; }
         [ForeignKey("PropertyId")]
-        public Property property { get; set; }
+        public Property Property { get; set; }
 
         [Required]
         public DateTime CheckInDate { get; set; }

@@ -43,6 +43,8 @@ namespace HolidayLocation_API
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
 
             var app = builder.Build();
 

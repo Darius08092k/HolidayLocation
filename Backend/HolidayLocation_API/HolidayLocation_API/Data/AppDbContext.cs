@@ -10,6 +10,7 @@ namespace HolidayLocation_API.Data
 
         }
         public DbSet<Property> Property { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

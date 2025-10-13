@@ -17,7 +17,7 @@ namespace HolidayLocation_API.Repositories.IRepository
             DateTime checkOut);
 
         // Get booked date
-        Task<IEnumerable<Booking>> GetBookedDatesAsync(int propertyId,
+        Task<IEnumerable<DateTime>> GetBookedDatesAsync(int propertyId,
             DateTime startDate,
             DateTime endDate);
 
