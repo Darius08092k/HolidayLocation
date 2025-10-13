@@ -21,6 +21,10 @@ namespace HolidayLocation_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> CreateBooking(Booking booking)
         {
+            // Get next property ID
+            //var nextId = await _bookingRepository.GetNextAvailableIdAsync();
+            //booking.BookingId = nextId;
+
             if (ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -35,7 +39,14 @@ namespace HolidayLocation_API.Controllers
             }
 
             await _bookingRepository.CreateAsync(booking);
-            return Ok();
+            return Ok(booking);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Booking>>> GetAllBookings()
+        {
+            var bookingList = await _bookingRepository.GetAllAsync();
+            return Ok(bookingList);
         }
 
     }

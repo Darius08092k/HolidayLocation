@@ -1,5 +1,51 @@
 [
   {
+    "ContainingType": "HolidayLocation_API.Controllers.BookingController",
+    "Method": "CreateBooking",
+    "RelativePath": "api/BookingAPI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "booking",
+        "Type": "HolidayLocation_API.Models.Booking",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "HolidayLocation_API.Models.Booking",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.BookingController",
+    "Method": "GetAllBookings",
+    "RelativePath": "api/BookingAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[HolidayLocation_API.Models.Booking, HolidayLocation_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "HolidayLocation_API.Controllers.PropertyController",
     "Method": "CreateProperty",
     "RelativePath": "api/PropertyAPI",

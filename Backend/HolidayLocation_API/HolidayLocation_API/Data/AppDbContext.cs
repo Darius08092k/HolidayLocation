@@ -16,6 +16,12 @@ namespace HolidayLocation_API.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Booking>(entity =>
+            {
+                entity.HasIndex(e => e.PropertyId);
+                entity.HasIndex(e => new { e.CheckInDate, e.CheckOutDate });
+
+            });
         }
     
     }
