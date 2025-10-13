@@ -25,7 +25,7 @@ namespace HolidayLocation_API.Controllers
             //var nextId = await _bookingRepository.GetNextAvailableIdAsync();
             //booking.BookingId = nextId;
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
