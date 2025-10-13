@@ -36,6 +36,19 @@ export class PropertyService {
       );
   }
 
+  getImageUrl(villaFolder: string, imageName: string): string {
+  return `${environment.imageUrl}/${villaFolder}/${imageName}`;
+}
+
+updatePropertyImageUrls(properties: Property[]): Property[] {
+  return properties.map(property => ({
+    ...property,
+    imageUrl: property.imageUrl.startsWith('http')
+      ? property.imageUrl
+      : `${environment.imageUrl}${property.imageUrl}`
+  }));
+}
+
   createProperty(property: any): Observable<Property>  {
     return this.http.post<Property>(`${this.apiURL}/PropertyAPI`, property)
       .pipe(

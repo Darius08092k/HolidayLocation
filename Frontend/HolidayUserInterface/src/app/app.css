@@ -1,0 +1,37 @@
+/* Navbar search positioning */
+
+/* Large screens - position search on the far right */
+@media (min-width: 992px) {
+  .navbar .d-flex.position-relative {
+    position: absolute !important;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    z-index: 1030;
+  }
+}
+
+/* Small screens - keep search in top right when collapsed */
+@media (max-width: 991.98px) {
+  .navbar .d-flex.position-relative {
+    position: absolute !important;
+    top: 0;
+    right: 15px;
+    z-index: 1030;
+    margin-top: 8px;
+  }
+
+  .navbar .d-flex.position-relative .input-group {
+    width: auto;
+    min-width: 200px;
+  }
+
+  .navbar .d-flex.position-relative .form-control {
+    font-size: 0.875rem;
+  }
+
+  .navbar .d-flex.position-relative .btn {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.5rem;
+  }
+}

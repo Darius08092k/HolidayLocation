@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Property } from '../../Models/property';
 import { PropertyService } from '../property.service';
+import { SearchService } from '../search.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../enviroment/enviroment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-property-table.component',
@@ -10,13 +13,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './property-table.component.html',
   styleUrl: './property-table.component.css'
 })
-export class PropertyTableComponent {
+export class PropertyTableComponent implements OnInit, OnDestroy {
   protected readonly title = 'Property Gallery Component';
 
   properties: Property[] = [];
+  filteredProperties: Property[] = [];  // Filtered list based on search
+  allProperties: Property[] = [];  // Store all properties for filtering
   loading: boolean = false;
   hoveredPropertyId: number | null = null;
   usingMockData: boolean = false;
+  private searchSubscription!: Subscription;
 
   // Mock data for testing when API is not available
   public static mockProperties: Property[] = [
@@ -27,7 +33,7 @@ export class PropertyTableComponent {
       rate: 350.00,
       occupancy: 6,
       sqft: 2500,
-      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      imageUrl: `${environment.imageUrl}/Villa1/villa1-main.jpg`,
       amenity: "Pool, Beach Access, WiFi, Kitchen, Parking",
       createdDate: new Date('2024-01-15')
     },
@@ -38,7 +44,7 @@ export class PropertyTableComponent {
       rate: 225.00,
       occupancy: 4,
       sqft: 1800,
-      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      imageUrl: `${environment.imageUrl}/Villa2/villa2-main.jpg`,
       amenity: "Fireplace, Hiking, WiFi, Kitchen, Hot Tub",
       createdDate: new Date('2024-02-10')
     },
@@ -49,7 +55,7 @@ export class PropertyTableComponent {
       rate: 180.00,
       occupancy: 2,
       sqft: 1200,
-      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      imageUrl: `${environment.imageUrl}/Villa3/villa3-main.jpg`,
       amenity: "WiFi, Gym Access, Rooftop Terrace, Kitchen",
       createdDate: new Date('2024-03-05')
     },
@@ -60,7 +66,7 @@ export class PropertyTableComponent {
       rate: 450.00,
       occupancy: 8,
       sqft: 3500,
-      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      imageUrl: `${environment.imageUrl}/Villa1/villa1-main.jpg`,
       amenity: "Pool, Spa, WiFi, Kitchen, Parking, Garden",
       createdDate: new Date('2024-01-20')
     },
@@ -71,16 +77,44 @@ export class PropertyTableComponent {
       rate: 175.00,
       occupancy: 4,
       sqft: 1600,
-      imageUrl: "/Images/Villa1/villa1-main.jpg",
+      imageUrl: `${environment.imageUrl}/Villa2/villa2-main.jpg`,
       amenity: "Fireplace, Garden, WiFi, Kitchen",
       createdDate: new Date('2024-02-15')
     }
   ];
 
-  constructor(private propertyService: PropertyService, private router: Router) { }
+  constructor(private propertyService: PropertyService, private router: Router, private searchService: SearchService) { }
 
   ngOnInit(): void {
     this.fetchProperties();
+
+    // Subscribe to search term changes
+    this.searchSubscription = this.searchService.searchTerm$.subscribe(term => {
+      this.filterProperties(term);
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  filterProperties(searchTerm: string): void {
+    if (!searchTerm || searchTerm.trim() === '') {
+      // If no search term, show all properties
+      this.filteredProperties = [...this.allProperties];
+    } else {
+      const term = searchTerm.toLowerCase().trim();
+      this.filteredProperties = this.allProperties.filter(property =>
+        property.name.toLowerCase().includes(term) ||
+        property.details.toLowerCase().includes(term) ||
+        property.amenity.toLowerCase().includes(term) ||
+        property.rate.toString().includes(term)
+      );
+      console.log(`Filtered ${this.filteredProperties.length} properties for term: "${searchTerm}"`);
+    }
   }
 
   fetchProperties(): void {
@@ -88,7 +122,7 @@ export class PropertyTableComponent {
     this.usingMockData = false;
 
     // Add a minimum loading time to allow for API connection attempts
-    const minLoadingTime = 10000; // 10 seconds for HTTP API connection attempts
+    const minLoadingTime = 5000; // 5 seconds for HTTP API connection attempts
     const startTime = Date.now();
 
     this.propertyService.getProperties().subscribe(
@@ -97,10 +131,17 @@ export class PropertyTableComponent {
         const remainingTime = Math.max(0, minLoadingTime - elapsed);
 
         setTimeout(() => {
-          this.properties = data;
+          this.allProperties = this.propertyService.updatePropertyImageUrls(data);
+          this.properties = [...this.allProperties];
+          this.filteredProperties = [...this.allProperties];
           this.loading = false;
           this.usingMockData = false;
           console.log('Properties fetched successfully:', this.properties);
+          // Apply any existing search filter
+          const currentSearch = this.searchService.getSearchTerm();
+          if (currentSearch) {
+            this.filterProperties(currentSearch);
+          }
         }, remainingTime);
       },
       (error) => {
@@ -109,9 +150,16 @@ export class PropertyTableComponent {
 
         setTimeout(() => {
           console.warn('API failed, using mock data:', error);
-          this.properties = PropertyTableComponent.mockProperties;
+          this.allProperties = PropertyTableComponent.mockProperties;
+          this.properties = [...this.allProperties];
+          this.filteredProperties = [...this.allProperties];
           this.loading = false;
           this.usingMockData = true;
+          // Apply any existing search filter
+          const currentSearch = this.searchService.getSearchTerm();
+          if (currentSearch) {
+            this.filterProperties(currentSearch);
+          }
         }, remainingTime);
       }
     );
@@ -124,17 +172,20 @@ export class PropertyTableComponent {
   onImageError(event: any): void {
     console.warn('Failed to load image:', event.target.src);
 
-    // Simple fallback hierarchy: villa1 -> online fallback -> placeholder
-    if (!event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
-      // First fallback: try Villa1 image
-      event.target.src = '/Images/Villa1/villa1-main.jpg';
-    } else if (!event.target.src.includes('images.unsplash.com')) {
-      // Second fallback: try online image
-      event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
-    } else {
-      // Final fallback: placeholder
-      event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
-    }
+    // Fallback hierarchy: try backup server -> villa1 -> online fallback -> placeholder
+  if (event.target.src.includes(environment.imageUrl)) {
+    // Try backup server first
+    event.target.src = event.target.src.replace(environment.imageUrl, environment.backupImageUrl);
+  } else if (event.target.src.includes(environment.backupImageUrl)) {
+    // Try Villa1 as fallback
+    event.target.src = `${environment.imageUrl}/Villa1/villa1-main.jpg`;
+  } else if (!event.target.src.includes('images.unsplash.com')) {
+    // Try online fallback
+    event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
+  } else {
+    // Final fallback: placeholder
+    event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
+  }
   }
 
   viewDetails(property: Property): void {

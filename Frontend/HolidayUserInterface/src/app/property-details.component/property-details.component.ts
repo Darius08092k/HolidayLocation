@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Property } from '../../Models/property';
 import { PropertyService } from '../property.service';
 import { PropertyTableComponent } from '../property-table.component/property-table.component';
+import { environment } from '../../enviroment/enviroment';
 
 @Component({
   selector: 'app-property-details',
@@ -43,6 +44,11 @@ export class PropertyDetailsComponent implements OnInit {
         const foundProperty = properties.find(p => p.id === this.propertyId);
         if (foundProperty) {
           this.property = foundProperty;
+          // Ensure the image URL is properly formatted from backend
+          if (this.property.imageUrl && !this.property.imageUrl.startsWith('http')) {
+            this.property.imageUrl = `${environment.imageUrl}${this.property.imageUrl}`;
+          }
+          console.log('Property loaded with image:', this.property.imageUrl);
         } else {
           this.errorMessage = 'Property not found.';
         }
@@ -69,13 +75,24 @@ export class PropertyDetailsComponent implements OnInit {
 
   onImageError(event: any): void {
     console.warn('Failed to load image:', event.target.src);
-    // Simple fallback hierarchy: villa1 -> online fallback -> placeholder
-    if (!event.target.src.includes('/Images/Villa1/villa1-main.jpg')) {
-      event.target.src = '/Images/Villa1/villa1-main.jpg';
+
+    // Fallback hierarchy: try backup server -> villa1 -> online fallback -> placeholder
+    if (event.target.src.includes(environment.imageUrl)) {
+      // Try backup server first
+      event.target.src = event.target.src.replace(environment.imageUrl, environment.backupImageUrl);
+      console.log('Trying backup server:', event.target.src);
+    } else if (event.target.src.includes(environment.backupImageUrl)) {
+      // Try Villa1 as fallback
+      event.target.src = `${environment.imageUrl}Images/Villa1/villa1-main.jpg`;
+      console.log('Trying Villa1 fallback');
     } else if (!event.target.src.includes('images.unsplash.com')) {
+      // Try online fallback
       event.target.src = 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=80';
+      console.log('Trying online fallback');
     } else {
+      // Final fallback: placeholder
       event.target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Property+Image';
+      console.log('Using placeholder');
     }
   }
 
