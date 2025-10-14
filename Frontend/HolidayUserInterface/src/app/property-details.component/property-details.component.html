@@ -81,7 +81,7 @@
 
           <!-- Action buttons -->
           <div class="action-buttons mt-4">
-            <button class="btn btn-primary btn-lg me-3" (click)="bookProperty()">
+            <button class="btn btn-primary btn-lg me-3" (click)="openBookingModal()">
               <i class="bi bi-calendar-check"></i> Book Now
             </button>
             <button class="btn btn-outline-primary btn-lg" (click)="goBack()">
@@ -93,3 +93,10 @@
     </div>
   </div>
 </div>
+
+<!-- Booking Modal -->
+<app-booking-details
+  [property]="property"
+  [isVisible]="showBookingModal"
+  (onClose)="closeBookingModal()">
+</app-booking-details>

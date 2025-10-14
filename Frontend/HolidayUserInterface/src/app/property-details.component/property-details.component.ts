@@ -5,10 +5,11 @@ import { Property } from '../../Models/property';
 import { PropertyService } from '../services/property/property.service';
 import { PropertyTableComponent } from '../property-table.component/property-table.component';
 import { environment } from '../../enviroment/enviroment';
+import { BookingDetailsComponent } from '../booking-details.component/booking-details.component';
 
 @Component({
   selector: 'app-property-details',
-  imports: [CommonModule],
+  imports: [CommonModule, BookingDetailsComponent],
   templateUrl: './property-details.component.html',
   styleUrl: './property-details.component.css'
 })
@@ -17,6 +18,8 @@ export class PropertyDetailsComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string = '';
   propertyId: number = 0;
+  showBookingModal: boolean = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -100,13 +103,12 @@ export class PropertyDetailsComponent implements OnInit {
     this.router.navigate(['/Property']);
   }
 
-  bookProperty(): void {
-    if (this.property) {
-      console.log('Booking property:', this.property.name);
-      const confirmed = confirm(`Would you like to book ${this.property.name} for $${this.property.rate}/night?`);
-      if (confirmed) {
-        alert(`Booking request sent for ${this.property.name}! You will receive a confirmation email shortly.`);
-      }
-    }
+  openBookingModal(): void {
+    this.showBookingModal = true;
+  }
+
+  closeBookingModal(): void {
+    console.log('Closing booking modal');
+    this.showBookingModal = false;
   }
 }
