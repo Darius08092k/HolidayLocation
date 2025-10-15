@@ -68,5 +68,6 @@ namespace HolidayLocation_API.Controllers
             await _signInManager.SignInAsync(user, isPersistent: false);
             return Ok(new { message = "Signed in" });
         }
+
     }
 }

@@ -5,12 +5,13 @@ using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HolidayLocation_API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,7 @@ namespace HolidayLocation_API
             });
 
             // Add Identity + roles
-            builder.Services.AddIdentityCore<ApplicationUser>(options =>
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
@@ -87,6 +88,45 @@ namespace HolidayLocation_API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                var adminRole = "Admin";
+                var userRole = "User";
+
+                if (!await roleManager.RoleExistsAsync(adminRole))
+                    await roleManager.CreateAsync(new IdentityRole(adminRole));
+                if (!await roleManager.RoleExistsAsync(userRole))
+                    await roleManager.CreateAsync(new IdentityRole(userRole));
+
+                var adminEmail = "admin@holiday.local";
+                var adminPassword = "Admin123!";
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new ApplicationUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+                    var result = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(adminUser, adminRole);
+                    }
+                }
+                else
+                {
+                    if (!await userManager.IsInRoleAsync(adminUser, adminRole))
+                    {
+                        await userManager.AddToRoleAsync(adminUser, adminRole);
+                    }
+                }
+            }
 
 
             app.MapControllers();
