@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Property } from '../../Models/property';
-import { PropertyService } from '../property.service';
+import { PropertyService } from '../services/property/property.service';
 import { SearchService } from '../search.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

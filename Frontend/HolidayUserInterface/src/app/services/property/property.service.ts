@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../enviroment/enviroment';
+import { environment } from '../../../enviroment/enviroment';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, timeout } from 'rxjs/operators';
-import { Property } from '../Models/property';
+import { Property } from '../../../Models/property';
 
 @Injectable({
   providedIn: 'root'

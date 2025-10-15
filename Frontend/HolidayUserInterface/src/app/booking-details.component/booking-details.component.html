@@ -1,0 +1,230 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop"
+     *ngIf="isVisible"
+     (click)="closeModal()">
+</div>
+
+<!-- Modal Container -->
+<div class="modal-container"
+     *ngIf="isVisible"
+     (click)="$event.stopPropagation()">
+
+  <!-- Success State -->
+  <div *ngIf="bookingSuccess" class="success-view">
+    <div class="modal-header">
+      <h2 class="modal-title">Booking Confirmed! 🎉</h2>
+      <button class="close-button"
+              (click)="closeAndReset()"
+              aria-label="Close">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="success-message">
+        <div class="success-icon">✓</div>
+        <h3>Your reservation is confirmed!</h3>
+        <p>We've sent a confirmation email to <strong>{{ confirmedBooking?.customerEmail }}</strong></p>
+
+        <div class="booking-summary-card">
+          <h4>{{ property?.name }}</h4>
+          <div class="summary-row">
+            <span>Check-in:</span>
+            <strong>{{ checkInDate | date:'mediumDate' }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Check-out:</span>
+            <strong>{{ checkOutDate | date:'mediumDate' }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Nights:</span>
+            <strong>{{ numberOfNights }}</strong>
+          </div>
+          <div class="summary-row total">
+            <span>Total:</span>
+            <strong>${{ totalCost }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="closeAndReset()">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Booking Form State -->
+  <div *ngIf="!bookingSuccess">
+    <div class="modal-header">
+      <h2 class="modal-title">Book Your Stay</h2>
+      <button class="close-button"
+              (click)="closeModal()"
+              aria-label="Close">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Property Summary -->
+      <div class="property-summary" *ngIf="property">
+        <h3>{{ property.name }}</h3>
+        <p class="property-rate">${{ property.rate }} <span>per night</span></p>
+        <p class="property-info">{{ property.occupancy }} guests • {{ property.sqft }} sq ft</p>
+      </div>
+
+      <!-- Booking Form -->
+      <form class="booking-form">
+
+        <!-- Date Selection -->
+        <div class="form-section">
+          <h4>Select Dates</h4>
+
+          <div class="date-inputs">
+            <!-- Check-in Date -->
+            <div class="form-group">
+              <label for="checkIn">Check-in</label>
+              <input
+                type="date"
+                id="checkIn"
+                class="form-control"
+                [(ngModel)]="checkInDate"
+                [min]="minDate"
+                (change)="onCheckInChange()"
+                name="checkIn"
+                required>
+              <span class="error-message" *ngIf="validationErrors['checkIn']">
+                {{ validationErrors['checkIn'] }}
+              </span>
+            </div>
+
+            <!-- Check-out Date -->
+            <div class="form-group">
+              <label for="checkOut">Check-out</label>
+              <input
+                type="date"
+                id="checkOut"
+                class="form-control"
+                [(ngModel)]="checkOutDate"
+                [min]="minCheckOutDate || minDate"
+                (change)="onCheckOutChange()"
+                name="checkOut"
+                [disabled]="!checkInDate"
+                required>
+              <span class="error-message" *ngIf="validationErrors['checkOut']">
+                {{ validationErrors['checkOut'] }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Stay Summary -->
+          <div class="stay-summary" *ngIf="numberOfNights > 0">
+            <div class="stay-info">
+              <span class="nights-count">{{ numberOfNights }} {{ numberOfNights === 1 ? 'night' : 'nights' }}</span>
+              <span class="total-price">${{ totalCost }}</span>
+            </div>
+          </div>
+
+          <!-- Availability Status -->
+          <div class="availability-status" *ngIf="checkInDate && checkOutDate">
+            <!-- Checking -->
+            <div *ngIf="isCheckingAvailability" class="status-checking">
+              <span class="spinner"></span>
+              Checking availability...
+            </div>
+
+            <!-- Available -->
+            <div *ngIf="!isCheckingAvailability && isAvailable === true" class="status-available">
+              <span class="icon">✓</span>
+              Available for your dates!
+            </div>
+
+            <!-- Not Available -->
+            <div *ngIf="!isCheckingAvailability && isAvailable === false" class="status-unavailable">
+              <span class="icon">✗</span>
+              {{ availabilityError }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Information -->
+        <div class="form-section" *ngIf="isAvailable === true">
+          <h4>Your Information</h4>
+
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              [(ngModel)]="customerName"
+              name="name"
+              placeholder="John Doe"
+              required>
+            <span class="error-message" *ngIf="validationErrors['name']">
+              {{ validationErrors['name'] }}
+            </span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              [(ngModel)]="customerEmail"
+              name="email"
+              placeholder="john@example.com"
+              required>
+            <span class="error-message" *ngIf="validationErrors['email']">
+              {{ validationErrors['email'] }}
+            </span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input
+              type="tel"
+              id="phone"
+              class="form-control"
+              [(ngModel)]="customerPhone"
+              name="phone"
+              placeholder="+1 (555) 123-4567"
+              required>
+            <span class="error-message" *ngIf="validationErrors['phone']">
+              {{ validationErrors['phone'] }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Submit Error -->
+        <div class="alert alert-danger" *ngIf="submitError">
+          {{ submitError }}
+        </div>
+
+      </form>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeModal()" [disabled]="isSubmitting">
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="submitBooking()"
+        [disabled]="isSubmitting || isAvailable !== true || !checkInDate || !checkOutDate">
+        <span *ngIf="!isSubmitting">Confirm Booking</span>
+        <span *ngIf="isSubmitting">
+          <span class="spinner-small"></span> Processing...
+        </span>
+      </button>
+    </div>
+  </div>
+
+</div>
