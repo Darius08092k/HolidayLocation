@@ -50,8 +50,6 @@ namespace HolidayLocation_API
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors("PropetiesCORS");
 
             // Enable static file serving for images
