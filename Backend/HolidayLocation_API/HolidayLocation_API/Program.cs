@@ -1,7 +1,9 @@
 
 using HolidayLocation_API.Data;
+using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HolidayLocation_API
@@ -21,7 +23,6 @@ namespace HolidayLocation_API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("HolidayLocationSQLConnection")));
 
             // Add services to the container.
-
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("PropetiesCORS",
@@ -30,6 +31,31 @@ namespace HolidayLocation_API
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials());
+            });
+
+            // Add Identity + roles
+            builder.Services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 6;
+
+            })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Configure application cookie
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "HolidayAuth";
+                options.Cookie.HttpOnly = false;
+                options.Cookie.SameSite = SameSiteMode.None; // for cross-site SPA requests
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // requires HTTPS
+                options.LoginPath = "/api/Auth/login";
+                options.LogoutPath = "/api/Auth/logout";
             });
 
             builder.Services.AddControllers();
@@ -54,6 +80,8 @@ namespace HolidayLocation_API
 
             // Enable static file serving for images
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
