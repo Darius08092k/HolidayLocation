@@ -1,5 +1,6 @@
 ﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Writers;
 using System.Net.NetworkInformation;
@@ -20,6 +21,7 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<ActionResult<Booking>> CreateBooking(Booking booking)
         {
             // Get next property ID

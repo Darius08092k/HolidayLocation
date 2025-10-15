@@ -69,5 +69,29 @@ namespace HolidayLocation_API.Controllers
             return Ok(new { message = "Signed in" });
         }
 
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok(new { message = "Signed out" });
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> Me()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                return Unauthorized();
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            return Ok(new 
+            { 
+                user.Email,
+                Roles = roles
+            });
+        }
     }
 }

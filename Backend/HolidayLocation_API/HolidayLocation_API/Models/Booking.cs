@@ -27,5 +27,10 @@ namespace HolidayLocation_API.Models
         [StringLength(20)]
         public string Status { get; set; } = "Confirmed"; // e.g., Pending, Confirmed, Cancelled
 
+        [StringLength(450)]
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser? User { get; set; }
+
     }
 }

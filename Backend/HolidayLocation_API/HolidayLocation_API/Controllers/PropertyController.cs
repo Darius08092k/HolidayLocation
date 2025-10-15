@@ -1,6 +1,7 @@
 ﻿﻿﻿﻿﻿﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HolidayLocation_API.Controllers
@@ -17,6 +18,8 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<Property>> CreateProperty(Property property)
         {
             // Get next property ID
@@ -47,6 +50,8 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteProperty(int id)
         {
             var villa = await _dbVilla.GetByIdAsync(id);
@@ -59,6 +64,7 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProperty(int id, Property property)
         {
             if (id <= 0)
@@ -86,6 +92,8 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpDelete("all")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteAllProperty()
         {
             await _dbVilla.DeleteAllAsync();
@@ -93,6 +101,7 @@ namespace HolidayLocation_API.Controllers
         }
 
         [HttpPost("seed-image-urls")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SeedImageUrls()
         {
             // Get all properties
