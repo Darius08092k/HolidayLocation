@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth/auth.service';
 export class RegisterComponenet {
   email: string = '';
   password: string = '';
+  confirmPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
   isLoading: boolean = false;
@@ -23,6 +24,12 @@ export class RegisterComponenet {
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
+
+    if (this.password !== this.confirmPassword) {
+      this.errorMessage = 'Passwords do not match';
+      return;
+    }
+
     this.isLoading = true;
 
     this.authService.register(this.email, this.password).subscribe({
