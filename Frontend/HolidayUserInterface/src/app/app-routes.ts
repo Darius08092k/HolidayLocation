@@ -3,6 +3,7 @@ import { PropertyTableComponent } from './property-table.component/property-tabl
 import { PropertyDetailsComponent } from './property-details.component/property-details.component';
 import { AuthComponenet } from './auth.componenet/auth.componenet';
 import { RegisterComponenet } from './register.componenet/register.componenet';
+import { AdminAccountManagemnetComponent } from './admin-account-managemnet.component/admin-account-managemnet.component';
 export const routes: Routes = [
   {
     path: '',
@@ -24,5 +25,10 @@ export const routes: Routes = [
   {
     path: 'property/:id',
     component: PropertyDetailsComponent
-  }
+  },
+    {
+      path: 'admin/accounts',
+      component: AdminAccountManagemnetComponent
+
+    }
 ];

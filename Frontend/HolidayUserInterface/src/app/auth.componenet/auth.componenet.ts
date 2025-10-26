@@ -31,7 +31,7 @@ export class AuthComponenet {
         this.isLoading = false;
       },
       error: (err) => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = typeof err === 'string' ? err : (err?.error?.message || 'Login failed');
         this.isLoading = false;
       }
     });

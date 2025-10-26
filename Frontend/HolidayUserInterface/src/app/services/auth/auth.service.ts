@@ -39,6 +39,24 @@ export class AuthService {
         );
     }
 
+    me():Observable<any>
+    {
+      return this.http.get<any>(`${this.apiUrl}/Auth/me`, { withCredentials: true })
+        .pipe(
+          timeout(10000),
+          catchError((error: HttpErrorResponse) => {
+            // Fallback to backup API
+            return this.http.get<any>(`${this.backupApiUrl}/Auth/me`, { withCredentials: true })
+              .pipe(
+                timeout(6000),
+                catchError((err: HttpErrorResponse) => {
+                  return throwError(() => (err.error?.message || 'Failed to load user'));
+                })
+              )
+          })
+        )
+    }
+
     register(email: string, password: string): Observable<any>
     {
       const user: RegisterDTO =
@@ -61,4 +79,17 @@ export class AuthService {
           })
         );
     }
+
+    getAllUsers(): Observable<any>
+    {
+      return this.http.get<any>(`${this.apiUrl}/Auth/Users`, { withCredentials: true })
+        .pipe(
+          timeout(10000),
+          catchError((error: HttpErrorResponse) => {
+            // Fallback to backup API
+            return this.http.get<any>(`${this.backupApiUrl}/Auth/Users`, { withCredentials: true })
+          })
+        )
+    }
 }
+
