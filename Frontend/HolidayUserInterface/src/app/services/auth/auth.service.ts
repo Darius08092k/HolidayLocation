@@ -3,7 +3,7 @@ import { environment } from '../../../enviroment/enviroment';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, timeout } from 'rxjs/operators';
-import { LoginDTO, RegisterDTO } from '../../models/auth';
+import { LoginDTO, RegisterDTO, User } from '../../models/auth';
 @Injectable({
   providedIn: 'root'
 })
@@ -80,14 +80,14 @@ export class AuthService {
         );
     }
 
-    getAllUsers(): Observable<any>
+    getAllUsers(): Observable<User[]>
     {
-      return this.http.get<any>(`${this.apiUrl}/Auth/Users`, { withCredentials: true })
+      return this.http.get<User[]>(`${this.apiUrl}/Auth/Users`, { withCredentials: true })
         .pipe(
           timeout(10000),
           catchError((error: HttpErrorResponse) => {
             // Fallback to backup API
-            return this.http.get<any>(`${this.backupApiUrl}/Auth/Users`, { withCredentials: true })
+            return this.http.get<User[]>(`${this.backupApiUrl}/Auth/Users`, { withCredentials: true })
           })
         )
     }

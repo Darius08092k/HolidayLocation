@@ -1,30 +1,37 @@
-<table class="table mr-5">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@social</td>
-    </tr>
-  </tbody>
-</table>
+<div class="admin-container">
+  <h2>User Account Management</h2>
+
+  <div class="table-wrapper">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Email</th>
+          <th scope="col">Roles</th>
+          <th scope="col" class="actions-column">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.email }}</td>
+          <td>
+            <span *ngFor="let role of u.roles">
+              {{ role }}
+            </span>
+          </td>
+          <td class="actions-column">
+            <button class="btn btn-edit" (click)="updateUser(u)" title="Edit user">
+              Edit
+            </button>
+            <button class="btn btn-delete" (click)="deleteUser(u)" title="Delete user">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="users.length === 0" class="no-data">
+      No users found.
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
     </div>
 
     <!-- Search Section - always visible on right, positioned absolutely on mobile -->
-    <div class="d-flex position-relative">
+    <div class="d-flex position-relative" *ngIf="showSearchBar">
       <div class="input-group">
         <input type="search"
                class="form-control"
