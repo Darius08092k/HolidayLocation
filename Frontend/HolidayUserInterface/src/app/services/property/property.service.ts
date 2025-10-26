@@ -14,15 +14,15 @@ export class PropertyService {
   private backupApiURL = environment.backupApiUrl;
 
   getProperties(): Observable<Property[]>  {
-    return this.http.get<Property[]>(`${this.apiURL}/PropertyAPI`)
+    return this.http.get<Property[]>(`${this.apiURL}/PropertyAPI`, { withCredentials: true })
       .pipe(
-        timeout(8000), // 8 second timeout for HTTP connections
+        timeout(8000),
         retry(1),
         catchError((error: HttpErrorResponse) => {
           console.error('Primary API failed, trying backup...', error);
-          return this.http.get<Property[]>(`${this.backupApiURL}/PropertyAPI`)
+          return this.http.get<Property[]>(`${this.backupApiURL}/PropertyAPI`, { withCredentials: true })
             .pipe(
-              timeout(5000), // 5 second timeout for backup
+              timeout(5000),
               catchError(this.handleError)
             );
         })
@@ -30,7 +30,7 @@ export class PropertyService {
   }
 
   getPropertyById(id: number): Observable<Property>  {
-    return this.http.get<Property>(`${this.apiURL}/PropertyAPI/${id}`)
+    return this.http.get<Property>(`${this.apiURL}/PropertyAPI/${id}`, { withCredentials: true })
       .pipe(
         catchError(this.handleError)
       );
@@ -50,7 +50,7 @@ updatePropertyImageUrls(properties: Property[]): Property[] {
 }
 
   createProperty(property: any): Observable<Property>  {
-    return this.http.post<Property>(`${this.apiURL}/PropertyAPI`, property)
+    return this.http.post<Property>(`${this.apiURL}/PropertyAPI`, property, { withCredentials: true })
       .pipe(
         catchError(this.handleError)
       );
@@ -69,11 +69,11 @@ updatePropertyImageUrls(properties: Property[]): Property[] {
 
   testConnection(): Observable<any> {
     console.log('Testing localhost connection...');
-    return this.http.get(`${this.apiURL}/PropertyAPI`)
+    return this.http.get(`${this.apiURL}/PropertyAPI`, { withCredentials: true })
       .pipe(
         catchError((error) => {
           console.log('Localhost failed, trying backup API...');
-          return this.http.get(`${this.backupApiURL}/PropertyAPI`)
+          return this.http.get(`${this.backupApiURL}/PropertyAPI`, { withCredentials: true })
             .pipe(
               catchError((backupError) => {
                 console.log('Both APIs failed:', { primary: error, backup: backupError });

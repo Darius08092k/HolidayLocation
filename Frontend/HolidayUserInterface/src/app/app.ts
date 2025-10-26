@@ -21,15 +21,6 @@ export class App {
   constructor(private searchService: SearchService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.me().subscribe({
-      next: (user) => {
-        const roles = user?.roles || user?.Roles || [];
-        this.isAdmin = roles.includes('Admin');
-      },
-      error: () => {
-        this.isAdmin = false;
-      }
-    });
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -46,7 +37,6 @@ export class App {
   }
 
   onSearchInputChange(): void {
-    // Auto-search as user types
     this.searchService.setSearchTerm(this.searchQuery);
   }
 }

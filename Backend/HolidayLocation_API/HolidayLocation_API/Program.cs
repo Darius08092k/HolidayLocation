@@ -53,10 +53,9 @@ namespace HolidayLocation_API
             {
                 options.Cookie.Name = "HolidayAuth";
                 options.Cookie.HttpOnly = false;
-                options.Cookie.SameSite = SameSiteMode.None; // for cross-site SPA requests
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // requires HTTPS
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.LoginPath = "/api/Auth/login";
-                options.LogoutPath = "/api/Auth/logout";
             });
 
             builder.Services.AddDataProtection();
