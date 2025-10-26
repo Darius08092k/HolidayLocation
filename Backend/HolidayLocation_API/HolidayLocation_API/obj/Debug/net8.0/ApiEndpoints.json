@@ -52,6 +52,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "HolidayLocation_API.Controllers.AuthController",
+    "Method": "GetUsers",
+    "RelativePath": "api/Auth/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "HolidayLocation_API.Controllers.BookingController",
     "Method": "CreateBooking",
     "RelativePath": "api/BookingAPI",
