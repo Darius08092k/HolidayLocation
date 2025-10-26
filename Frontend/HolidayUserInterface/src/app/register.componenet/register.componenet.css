@@ -1,0 +1,6 @@
+.auth-container { max-width: 420px; margin: 40px auto; }
+.form-group { margin-bottom: 1rem; }
+.form-control { width: 100%; padding: 0.5rem; }
+.error { color: #dc3545; margin: 0.5rem 0; }
+.success { color: #28a745; margin: 0.5rem 0; }
+.btn { margin-right: 0.5rem; }
