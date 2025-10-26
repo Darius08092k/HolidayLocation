@@ -91,6 +91,18 @@
         }
       }
     },
+    "/api/Auth/Users": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/BookingAPI": {
       "post": {
         "tags": [

@@ -93,5 +93,24 @@ namespace HolidayLocation_API.Controllers
                 Roles = roles
             });
         }
+
+
+        [HttpGet("Users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = _userManager.Users.ToList();
+            var userList = new List<object>();
+            foreach(var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userList.Add(new 
+                { 
+                    user.Id,
+                    user.Email,
+                    Roles = roles
+                });
+            }
+            return Ok(userList);
+        }
     }
 }
