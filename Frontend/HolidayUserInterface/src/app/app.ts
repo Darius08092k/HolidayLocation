@@ -21,6 +21,18 @@ export class App {
   constructor(private searchService: SearchService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    this.authService.checkAuthStatus().subscribe({
+      next: (user) => {
+        this.isAdmin = user?.roles?.includes('Admin') || false;
+      },
+      error: () => {
+        this.isAdmin = false;
+      }
+    });
+
+    this.authService.currentUser$.subscribe(user => {
+      this.isAdmin = user?.roles?.includes('Admin') || false;
+    });
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)

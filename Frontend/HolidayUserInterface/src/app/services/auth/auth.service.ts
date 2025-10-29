@@ -109,12 +109,13 @@ export class AuthService {
         );
     }
 
-    register(email: string, password: string): Observable<any>
+    register(email: string, password: string, confirmPassword: string): Observable<any>
     {
       const user: RegisterDTO =
       {
         email,
-        password
+        password,
+        confirmPassword
       }
       return this.http.post<any>(`${this.apiUrl}/Auth/register`, user, { withCredentials: true })
         .pipe(

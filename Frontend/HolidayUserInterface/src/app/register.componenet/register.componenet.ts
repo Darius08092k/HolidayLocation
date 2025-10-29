@@ -32,7 +32,7 @@ export class RegisterComponenet {
 
     this.isLoading = true;
 
-    this.authService.register(this.email, this.password).subscribe({
+    this.authService.register(this.email, this.password, this.confirmPassword).subscribe({
       next: () => {
         this.isLoading = false;
         this.successMessage = 'Registration successful. You can now log in.';
@@ -44,7 +44,7 @@ export class RegisterComponenet {
     });
   }
 
-  goToLogin(): void {
+  goToRegister(): void {
     this.router.navigate(['/login']);
   }
 }
