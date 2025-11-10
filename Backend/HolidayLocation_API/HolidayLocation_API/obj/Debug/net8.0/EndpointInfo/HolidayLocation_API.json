@@ -144,17 +144,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApplicationUser"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ApplicationUser"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ApplicationUser"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               }
             }
           }
@@ -866,6 +866,25 @@
             "minLength": 1,
             "type": "string",
             "format": "password"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

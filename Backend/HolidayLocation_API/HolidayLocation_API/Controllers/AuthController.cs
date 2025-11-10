@@ -1,5 +1,6 @@
 ﻿using HolidayLocation_API.DTO;
 using HolidayLocation_API.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +91,8 @@ namespace HolidayLocation_API.Controllers
             return Ok(new 
             { 
                 user.Email,
+                user.UserName,
+                user.PhoneNumber,
                 Roles = roles
             });
         }
@@ -107,6 +110,8 @@ namespace HolidayLocation_API.Controllers
                 { 
                     user.Id,
                     user.Email,
+                    user.UserName,
+                    user.PhoneNumber,
                     Roles = roles
                 });
             }
@@ -131,7 +136,7 @@ namespace HolidayLocation_API.Controllers
             return Ok(new { message = "User deleted successfully" });
         }
         [HttpPut("EditUser/{id}")]
-        public async Task<IActionResult> EditUser(string id, ApplicationUser applicationUser)
+        public async Task<IActionResult> EditUser(string id, [FromBody] UpdateUserRequest updateUserRequest)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -139,7 +144,31 @@ namespace HolidayLocation_API.Controllers
                 return NotFound(new { message = "User not found" });
             }
 
-            applicationUser.Id = id;
+            // Update Email
+            if (!string.IsNullOrWhiteSpace(updateUserRequest.Email) && !string.Equals(updateUserRequest.Email, user.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                var existing = await _userManager.FindByEmailAsync(updateUserRequest.Email);
+                if (existing != null && existing.Id != user.Id)
+                {
+                    return BadRequest(new { message = "Email is already in use." });
+                }
+
+                var emailRes = await _userManager.SetEmailAsync(user, updateUserRequest.Email);
+                if (!emailRes.Succeeded) return BadRequest(emailRes.Errors);
+            }
+
+            // Update Username
+            if (!string.IsNullOrWhiteSpace(updateUserRequest.UserName) && !string.Equals(updateUserRequest.UserName, user.UserName, StringComparison.Ordinal))
+            {
+                var nameRes = await _userManager.SetUserNameAsync(user, updateUserRequest.UserName);
+                if (!nameRes.Succeeded) return BadRequest(nameRes.Errors);
+            }
+
+            // Update phone number
+            if (!string.IsNullOrWhiteSpace(updateUserRequest.PhoneNumber))
+            {
+                user.PhoneNumber = updateUserRequest.PhoneNumber;
+            }
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
