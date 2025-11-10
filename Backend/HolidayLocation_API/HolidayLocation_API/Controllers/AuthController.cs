@@ -170,6 +170,23 @@ namespace HolidayLocation_API.Controllers
                 user.PhoneNumber = updateUserRequest.PhoneNumber;
             }
 
+            // Update roles if provided
+            if (updateUserRequest.Roles != null)
+            {
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                var removeRolesResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                if (!removeRolesResult.Succeeded)
+                {
+                    return BadRequest(removeRolesResult.Errors);
+                }
+
+                var addRolesResult = await _userManager.AddToRolesAsync(user, updateUserRequest.Roles);
+                if (!addRolesResult.Succeeded)
+                {
+                    return BadRequest(addRolesResult.Errors);
+                }
+            }
+
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {

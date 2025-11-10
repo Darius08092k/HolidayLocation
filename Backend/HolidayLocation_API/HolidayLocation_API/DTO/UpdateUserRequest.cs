@@ -10,5 +10,7 @@ namespace HolidayLocation_API.DTO
         public string? UserName { get; set; }
 
         public string? PhoneNumber { get; set; }
+        
+        public string[]? Roles { get; set; }
     }
 }
