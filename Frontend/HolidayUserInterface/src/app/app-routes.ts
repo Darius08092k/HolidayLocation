@@ -4,11 +4,13 @@ import { PropertyDetailsComponent } from './property-details.component/property-
 import { AuthComponenet } from './auth.componenet/auth.componenet';
 import { RegisterComponenet } from './register.componenet/register.componenet';
 import { AdminAccountManagemnetComponent } from './admin-account-managemnet.component/admin-account-managemnet.component';
+import { authGuard, adminGuard, homeGuard } from './services/auth/auth.guard';
+
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
+    canActivate: [homeGuard],
+    children: []
   },
   {
     path: 'login',
@@ -20,15 +22,17 @@ export const routes: Routes = [
   },
   {
     path: 'Property',
-    component: PropertyTableComponent
+    component: PropertyTableComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'property/:id',
-    component: PropertyDetailsComponent
+    component: PropertyDetailsComponent,
+    canActivate: [authGuard]
   },
-    {
-      path: 'admin/accounts',
-      component: AdminAccountManagemnetComponent
-
-    }
+  {
+    path: 'admin/accounts',
+    component: AdminAccountManagemnetComponent,
+    canActivate: [adminGuard]
+  }
 ];

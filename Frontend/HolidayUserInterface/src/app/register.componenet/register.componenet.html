@@ -1,8 +1,7 @@
-<div class="auth-container">
-  <h2>Register</h2>
-
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
+<div class="container">
+    <div class="heading">Create Account</div>
+    <form (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
       <label>Email</label>
       <input type="email" [(ngModel)]="email" name="email" required class="form-control">
     </div>
@@ -15,19 +14,16 @@
     <div class="form-group">
       <label>Confirm Password</label>
       <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required class="form-control">
-      <div class="error" *ngIf="password && confirmPassword && password !== confirmPassword">
-        Passwords do not match
-      </div>
     </div>
 
     <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
-    <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
 
     <button class="btn btn-primary" type="submit" [disabled]="isLoading">
       <span *ngIf="!isLoading">Register</span>
-      <span *ngIf="isLoading">Processing...</span>
+      <span *ngIf="isLoading">Creating account...</span>
     </button>
 
-    <button class="btn btn-link" type="button" (click)="goToLogin()">Back to Login</button>
-  </form>
-</div>
+    <button class="btn btn-link" type="button" (click)="goToRegister()">Login into an existing account</button>
+
+    </form>
+  </div>

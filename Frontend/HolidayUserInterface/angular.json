@@ -57,9 +57,19 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "builder": "@angular/build:dev-server",
           "options": {
             "proxyConfig": "src/proxy.conf.json"
-          }
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "HolidayUserInterface:build:production"
+            },
+            "development": {
+              "buildTarget": "HolidayUserInterface:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
