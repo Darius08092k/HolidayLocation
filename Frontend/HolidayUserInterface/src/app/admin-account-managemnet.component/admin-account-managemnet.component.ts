@@ -59,34 +59,17 @@ export class AdminAccountManagemnetComponent {
 
     const rolesArray = this.editRoles.split(',').map(role => role.trim()).filter(role => role.length > 0);
 
-    // Create updated user object with all fields
-    const updatedUser: User = {
-      id: this.selectedUser.id,
-      email: this.editEmail,
-      userName: this.editUserName,
-      phoneNumber: this.editPhoneNumber,
-      roles: rolesArray
-    };
-
-    // Note: The current backend updateUser method only accepts id, email, and roles
-    // You may need to update the backend API to support username and phone number updates
-    this.authService.updateUser(this.selectedUser.id!, this.editEmail, rolesArray).subscribe(
+    this.authService.updateUser(
+      this.selectedUser.id!,
+      this.editEmail,
+      this.editUserName,
+      this.editPhoneNumber,
+      rolesArray
+    ).subscribe(
       () => {
         console.log('User updated successfully');
         this.closeEditModal();
         this.fetchAllUsers(); // Refresh the user list
-      },
-      (error) => {
-        console.error('Error updating user:', error);
-      }
-    );
-  }
-
-  updateUser(user: User): void {
-    this.authService.updateUser(user.id!, user.email, user.roles).subscribe(
-      () => {
-        console.log('User updated successfully');
-        this.fetchAllUsers();
       },
       (error) => {
         console.error('Error updating user:', error);

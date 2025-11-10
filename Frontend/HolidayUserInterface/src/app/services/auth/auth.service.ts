@@ -154,12 +154,12 @@ export class AuthService {
         )
     }
 
-    updateUser(id: string, email: string, roles: string[]): Observable<any>
+    updateUser(id: string, email: string, userName: string, phoneNumber: string, roles: string[]): Observable<any>
     {
       const user = {
         email: email,
-        userName: email, // Using email as username for now, but this can be changed
-        phoneNumber: '', // Empty by default
+        userName: userName,
+        phoneNumber: phoneNumber,
         roles: roles
       };
 
