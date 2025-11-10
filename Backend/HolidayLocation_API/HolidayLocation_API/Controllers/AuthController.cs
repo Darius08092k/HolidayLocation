@@ -112,5 +112,42 @@ namespace HolidayLocation_API.Controllers
             }
             return Ok(userList);
         }
+
+        [HttpDelete("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if(user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            
+            if(!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok(new { message = "User deleted successfully" });
+        }
+        [HttpPut("EditUser/{id}")]
+        public async Task<IActionResult> EditUser(string id, ApplicationUser applicationUser)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            applicationUser.Id = id;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(new { message = "User updated successfully" });
+        }
     }
 }
