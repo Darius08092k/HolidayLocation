@@ -6,6 +6,8 @@
       <thead>
         <tr>
           <th scope="col">Email</th>
+          <th scope="col">Username</th>
+          <th scope="col">Phone</th>
           <th scope="col">Roles</th>
           <th scope="col" class="actions-column">Actions</th>
         </tr>
@@ -13,13 +15,15 @@
       <tbody>
         <tr *ngFor="let u of users">
           <td>{{ u.email }}</td>
+          <td>{{ u.userName || '-' }}</td>
+          <td>{{ u.phoneNumber || '-' }}</td>
           <td>
             <span *ngFor="let role of u.roles">
               {{ role }}
             </span>
           </td>
           <td class="actions-column">
-            <button class="btn btn-edit" (click)="updateUser(u)" title="Edit user">
+            <button class="btn btn-edit" (click)="openEditModal(u)" title="Edit user">
               Edit
             </button>
             <button class="btn btn-delete" (click)="deleteUser(u)" title="Delete user">
@@ -33,5 +37,81 @@
     <div *ngIf="users.length === 0" class="no-data">
       No users found.
     </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop"
+     *ngIf="isEditModalVisible"
+     (click)="closeEditModal()">
+</div>
+
+<!-- Edit User Modal Container -->
+<div class="modal-container"
+     *ngIf="isEditModalVisible"
+     (click)="$event.stopPropagation()">
+
+  <div class="modal-header">
+    <h2 class="modal-title">Edit User</h2>
+    <button class="close-button"
+            (click)="closeEditModal()"
+            aria-label="Close">
+      <span>&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="edit-user-form">
+      <div class="form-group">
+        <label for="editEmail">Email</label>
+        <input
+          type="email"
+          id="editEmail"
+          class="form-control"
+          [(ngModel)]="editEmail"
+          name="editEmail"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="editUserName">Username</label>
+        <input
+          type="text"
+          id="editUserName"
+          class="form-control"
+          [(ngModel)]="editUserName"
+          name="editUserName">
+      </div>
+
+      <div class="form-group">
+        <label for="editPhoneNumber">Phone Number</label>
+        <input
+          type="tel"
+          id="editPhoneNumber"
+          class="form-control"
+          [(ngModel)]="editPhoneNumber"
+          name="editPhoneNumber">
+      </div>
+
+      <div class="form-group">
+        <label for="editRoles">Roles (comma separated)</label>
+        <input
+          type="text"
+          id="editRoles"
+          class="form-control"
+          [(ngModel)]="editRoles"
+          name="editRoles"
+          placeholder="admin, user">
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="closeEditModal()">
+      Cancel
+    </button>
+    <button class="btn btn-primary" (click)="saveUser()">
+      Save Changes
+    </button>
   </div>
 </div>

@@ -145,6 +145,40 @@ export class AuthService {
           timeout(10000),
           catchError((error: HttpErrorResponse) => {
             return this.http.get<User[]>(`${this.backupApiUrl}/Auth/Users`, { withCredentials: true })
+              .pipe(
+                catchError((err: HttpErrorResponse) => {
+                  return throwError(() => (err.error?.message || 'Failed to load users'));
+                })
+              )
+          })
+        )
+    }
+
+    updateUser(id: string, email: string, roles: string[]): Observable<any>
+    {
+      const user = {
+        email: email,
+        userName: email, // Using email as username for now, but this can be changed
+        phoneNumber: '', // Empty by default
+        roles: roles
+      };
+
+      return this.http.put<any>(`${this.apiUrl}/Auth/EditUser/${id}`, user, { withCredentials: true })
+        .pipe(
+          timeout(10000),
+          catchError((error: HttpErrorResponse) => {
+            return throwError(() => (error.error?.message || 'Failed to update user'));
+          })
+        )
+    }
+
+    deleteUser(id: string): Observable<any>
+    {
+      return this.http.delete<any>(`${this.apiUrl}/Auth/DeleteUser/${id}`, { withCredentials: true })
+        .pipe(
+          timeout(10000),
+          catchError((error: HttpErrorResponse) => {
+            return throwError(() => (error.error?.message || 'Failed to delete user'));
           })
         )
     }

@@ -4,6 +4,6 @@ export const environment = {
   backupApiUrl: '/api',  // Backup: localhost for testing
 
   // Images urls
-  imageUrl: 'http://192.168.1.140:5144',
+  imageUrl: 'http://192.168.1.137:5144',
   backupImageUrl: 'http://localhost:5144'
 };
