@@ -1,6 +1,27 @@
 [
   {
     "ContainingType": "HolidayLocation_API.Controllers.AuthController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Auth/CreateUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerRequest",
+        "Type": "HolidayLocation_API.DTO.RegisterRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "HolidayLocation_API.Controllers.AuthController",
     "Method": "DeleteUser",
     "RelativePath": "api/Auth/DeleteUser/{id}",
     "HttpMethod": "DELETE",

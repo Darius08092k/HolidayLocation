@@ -4,6 +4,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Packaging.Signing;
 
 
 namespace HolidayLocation_API.Controllers
@@ -194,6 +195,48 @@ namespace HolidayLocation_API.Controllers
             }
 
             return Ok(new { message = "User updated successfully" });
+        }
+
+        [HttpPost("CreateUser")]
+        [Authorize (Roles = "Admin")]
+        public async Task<IActionResult> CreateUser([FromBody] RegisterRequest registerRequest, string role)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Validate role
+            var targetRole = string.IsNullOrWhiteSpace(role) ? "User" : role.Trim();
+            if (targetRole != "User" && targetRole != "Admin")
+            {
+                return BadRequest(new { message = "Role must be 'User' or 'Admin'." });
+            }
+
+            // Verify duplicate email
+            var existing = await _userManager.FindByEmailAsync(registerRequest.Email);
+            if (existing != null)
+            {
+                return Conflict(new { message = "Email is already in use." });
+            }
+
+            var user = new ApplicationUser
+            {
+                UserName = registerRequest.Email,
+                Email = registerRequest.Email,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, registerRequest.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            var roleResult = await _userManager.AddToRoleAsync(user, targetRole);
+            if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
+
+            await _userManager.AddToRoleAsync(user, "User");
+
+            return Ok(new { message = "User created successfully" });
         }
     }
 }
