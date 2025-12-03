@@ -41,6 +41,7 @@
 .page-link:hover {
   background-color: #007bff;
   color: white;
+  border-color: #007bff;
 }
 
 .page-item:not(.active) .page-link:hover {
@@ -93,51 +94,6 @@ h2 {
 
 .btn-add:hover {
   background-color: #0056b3;
-}
-
-/* Navigation styles */
-.pagination {
-  margin: 20px 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  gap: 5px;
-}
-
-.page-item {
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  background-color: white;
-}
-
-.page-item.active {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-.page-link {
-  display: block;
-  padding: 6px 12px;
-  text-decoration: none;
-  color: #333;
-  transition: all 0.3s ease;
-}
-
-.page-link:hover {
-  background-color: #007bff;
-  color: white;
-}
-
-.page-item:not(.active) .page-link:hover {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
-}
-
-.page-link.active {
-  color: white;
-  background-color: #007bff;
-  border-color: #007bff;
 }
 
 .table {
@@ -296,6 +252,85 @@ h2 {
   border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.image-url-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.image-url-input-group .form-control {
+  flex: 1;
+}
+
+.image-url-input-group .btn {
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+/* Image Selector Styles */
+.image-selector-modal {
+  max-width: 800px;
+  max-height: 80vh;
+}
+
+.image-selector-grid {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.image-folder {
+  margin-bottom: 30px;
+}
+
+.image-folder h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.image-item {
+  cursor: pointer;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.image-item:hover {
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+  transform: translateY(-5px);
+}
+
+.thumbnail {
+  max-width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.image-item p {
+  margin: 5px 0 0 0;
+  font-size: 0.85rem;
+  color: #666;
+  word-break: break-word;
+  max-height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn-primary {

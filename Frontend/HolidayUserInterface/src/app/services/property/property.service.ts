@@ -56,6 +56,27 @@ updatePropertyImageUrls(properties: Property[]): Property[] {
       );
   }
 
+  updateProperty(id: number, property: any): Observable<Property>  {
+    return this.http.put<Property>(`${this.apiURL}/PropertyAPI/${id}`, property, { withCredentials: true })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteProperty(id: number): Observable<any>  {
+    return this.http.delete<any>(`${this.apiURL}/PropertyAPI/${id}`, { withCredentials: true })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getAvailableImages(): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/PropertyAPI/images`, { withCredentials: true })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

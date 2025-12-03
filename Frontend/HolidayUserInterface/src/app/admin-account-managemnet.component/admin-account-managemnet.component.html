@@ -1,4 +1,19 @@
 <div class="admin-container">
+  <!-- Navigation component -->
+  <nav aria-label="Navigation" class="navigation-container">
+    <ul class="pagination pagination-sm">
+      <li class="page-item active">
+        <a class="page-link" routerLink="/admin/accounts" aria-current="page">Account Management</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" routerLink="/admin/properties">Property Management</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" routerLink="/admin/bookings">Booking Management</a>
+      </li>
+    </ul>
+  </nav>
+
   <h2>User Account Management</h2>
 
   <div class="table-wrapper">
@@ -38,6 +53,17 @@
       No users found.
     </div>
   </div>
+
+  <div class="add-button-container">
+    <button class="btn btn-primary btn-add" (click)="openCreateModal()" title="Add new user">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+      </svg>
+      <span>Add New User</span>
+    </button>
+  </div>
+
 </div>
 
 <!-- Modal Backdrop -->
@@ -112,6 +138,98 @@
     </button>
     <button class="btn btn-primary" (click)="saveUser()">
       Save Changes
+    </button>
+  </div>
+</div>
+
+<!-- Create User Modal Backdrop -->
+<div class="modal-backdrop"
+     *ngIf="isCreateModalVisible"
+     (click)="closeCreateModal()">
+</div>
+
+<!-- Create User Modal Container -->
+<div class="modal-container"
+     *ngIf="isCreateModalVisible"
+     (click)="$event.stopPropagation()">
+
+  <div class="modal-header">
+    <h2 class="modal-title">Create New User</h2>
+    <button class="close-button"
+            (click)="closeCreateModal()"
+            aria-label="Close">
+      <span>&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form class="create-user-form" autocomplete="off">
+      <div class="form-group">
+        <label for="newEmail">Email *</label>
+        <input
+          type="email"
+          id="newEmail"
+          class="form-control"
+          [(ngModel)]="newEmail"
+          name="newEmail"
+          autocomplete="off"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="newPassword">Password *</label>
+        <input
+          type="password"
+          id="newPassword"
+          class="form-control"
+          [(ngModel)]="newPassword"
+          name="newPassword"
+          autocomplete="new-password"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="newUserName">Username</label>
+        <input
+          type="text"
+          id="newUserName"
+          class="form-control"
+          [(ngModel)]="newUserName"
+          name="newUserName"
+          autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="newPhoneNumber">Phone Number</label>
+        <input
+          type="tel"
+          id="newPhoneNumber"
+          class="form-control"
+          [(ngModel)]="newPhoneNumber"
+          name="newPhoneNumber"
+          autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="newRoles">Roles (comma separated)</label>
+        <input
+          type="text"
+          id="newRoles"
+          class="form-control"
+          [(ngModel)]="newRoles"
+          name="newRoles"
+          placeholder="user, admin"
+          autocomplete="off">
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="closeCreateModal()">
+      Cancel
+    </button>
+    <button class="btn btn-primary" (click)="createUser()" [disabled]="!newEmail || !newPassword">
+      Create User
     </button>
   </div>
 </div>

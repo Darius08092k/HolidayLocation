@@ -182,4 +182,20 @@ export class AuthService {
           })
         )
     }
+
+    createUser(email: string, password: string, role: string): Observable<any> {
+      const registerRequest = {
+        email: email,
+        password: password,
+        confirmPassword: password
+      };
+
+      return this.http.post<any>(`${this.apiUrl}/Auth/CreateUser?role=${role}`, registerRequest, { withCredentials: true })
+        .pipe(
+          timeout(10000),
+          catchError((error: HttpErrorResponse) => {
+            return throwError(() => (error.error?.message || 'Failed to create user'));
+          })
+        )
+    }
 }
