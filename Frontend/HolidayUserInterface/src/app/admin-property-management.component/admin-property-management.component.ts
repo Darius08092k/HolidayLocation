@@ -54,37 +54,6 @@ export class AdminPropertyManagementComponent implements OnInit {
     );
   }
 
-  fetchAvailableImages(): void {
-    this.propertyService.getAvailableImages().subscribe(
-      (response: any) => {
-        this.imageFolders = response.folders;
-      },
-      (error) => {
-        console.error('Error fetching images:', error);
-      }
-    );
-  }
-
-  openImageSelector(isEditingProperty: boolean): void {
-    this.isEditingProperty = isEditingProperty;
-    this.selectedImagePath = isEditingProperty ? this.editImageUrl : this.newImageUrl;
-    this.fetchAvailableImages();
-    this.isImageSelectorVisible = true;
-  }
-
-  closeImageSelector(): void {
-    this.isImageSelectorVisible = false;
-  }
-
-  selectImage(imagePath: string): void {
-    if (this.isEditingProperty) {
-      this.editImageUrl = imagePath;
-    } else {
-      this.newImageUrl = imagePath;
-    }
-    this.closeImageSelector();
-  }
-
   openEditModal(property: Property): void {
     this.selectedProperty = { ...property };
     this.editName = property.name;
@@ -132,14 +101,29 @@ export class AdminPropertyManagementComponent implements OnInit {
   }
 
   openFileBrowser(): void {
-    this.propertyService.openFileBrowser().subscribe(
-      () => {
-        console.log('File browser opened. Please select an image and enter the path.');
-      },
-      (error) => {
-        console.error('Error opening file browser:', error);
+    // Trigger hidden file input
+    const fileInput = document.getElementById('imageFileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onImageSelected(event: any, isEditForm: boolean): void {
+    const file = event.target.files[0];
+    if (file) {
+      // Get the file name and construct the path
+      const fileName = file.name;
+      const imagePath = `/images/${fileName}`;
+
+      if (isEditForm) {
+        this.editImageUrl = imagePath;
+      } else {
+        this.newImageUrl = imagePath;
       }
-    );
+
+      // Reset the input
+      event.target.value = '';
+    }
   }
 
   saveProperty(): void {

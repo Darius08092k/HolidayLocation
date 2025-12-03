@@ -1,4 +1,4 @@
-﻿﻿﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -127,92 +127,6 @@ namespace HolidayLocation_API.Controllers
             }
 
             return Ok(new { message = "Image URLs updated successfully", updatedCount = updates.Count });
-        }
-
-        [HttpGet("images")]
-        public IActionResult GetAvailableImages()
-        {
-            try
-            {
-                var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                
-                if (!Directory.Exists(imagesPath))
-                {
-                    return Ok(new { folders = new List<object>() });
-                }
-
-                var folders = Directory.GetDirectories(imagesPath)
-                    .Select(folder => new
-                    {
-                        name = Path.GetFileName(folder),
-                        images = Directory.GetFiles(folder)
-                            .Where(file => IsImageFile(file))
-                            .Select(file => new
-                            {
-                                filename = Path.GetFileName(file),
-                                path = $"/images/{Path.GetFileName(folder)}/{Path.GetFileName(file)}"
-                            })
-                            .ToList()
-                    })
-                    .Where(f => ((List<dynamic>)f.images).Count > 0)
-                    .ToList();
-
-                return Ok(new { folders = folders });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
-
-        private bool IsImageFile(string filePath)
-        {
-            var imageExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-            return imageExtensions.Contains(Path.GetExtension(filePath).ToLower());
-        }
-
-        [HttpPost("open-file-browser")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult OpenFileBrowser()
-        {
-            try
-            {
-                var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                
-                if (!Directory.Exists(imagesPath))
-                {
-                    Directory.CreateDirectory(imagesPath);
-                }
-
-                // Open file explorer at the images directory
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
-                
-                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                {
-                    psi.FileName = "explorer.exe";
-                    psi.Arguments = imagesPath;
-                }
-                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
-                {
-                    psi.FileName = "open";
-                    psi.Arguments = imagesPath;
-                }
-                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                {
-                    psi.FileName = "xdg-open";
-                    psi.Arguments = imagesPath;
-                }
-
-                using (System.Diagnostics.Process.Start(psi))
-                {
-                }
-
-                return Ok(new { message = "File browser opened" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
         }
     }
 }

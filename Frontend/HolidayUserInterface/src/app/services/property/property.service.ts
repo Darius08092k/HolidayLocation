@@ -70,19 +70,6 @@ updatePropertyImageUrls(properties: Property[]): Property[] {
       );
   }
 
-  getAvailableImages(): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/PropertyAPI/images`, { withCredentials: true })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  openFileBrowser(): Observable<any> {
-    return this.http.post<any>(`${this.apiURL}/PropertyAPI/open-file-browser`, {}, { withCredentials: true })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
