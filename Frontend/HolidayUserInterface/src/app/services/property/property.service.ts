@@ -77,6 +77,13 @@ updatePropertyImageUrls(properties: Property[]): Property[] {
       );
   }
 
+  openFileBrowser(): Observable<any> {
+    return this.http.post<any>(`${this.apiURL}/PropertyAPI/open-file-browser`, {}, { withCredentials: true })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

@@ -131,6 +131,17 @@ export class AdminPropertyManagementComponent implements OnInit {
     this.newAmenity = '';
   }
 
+  openFileBrowser(): void {
+    this.propertyService.openFileBrowser().subscribe(
+      () => {
+        console.log('File browser opened. Please select an image and enter the path.');
+      },
+      (error) => {
+        console.error('Error opening file browser:', error);
+      }
+    );
+  }
+
   saveProperty(): void {
     if (!this.selectedProperty) return;
 

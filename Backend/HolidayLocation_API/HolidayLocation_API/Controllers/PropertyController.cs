@@ -1,4 +1,4 @@
-﻿﻿using HolidayLocation_API.Models;
+﻿﻿﻿﻿using HolidayLocation_API.Models;
 using HolidayLocation_API.Repositories.IRepository;
 using HolidayLocation_API.Repositories.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -171,8 +171,48 @@ namespace HolidayLocation_API.Controllers
             return imageExtensions.Contains(Path.GetExtension(filePath).ToLower());
         }
 
-        // ... existing code ...
+        [HttpPost("open-file-browser")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult OpenFileBrowser()
+        {
+            try
+            {
+                var imagesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+                
+                if (!Directory.Exists(imagesPath))
+                {
+                    Directory.CreateDirectory(imagesPath);
+                }
 
+                // Open file explorer at the images directory
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
+                
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    psi.FileName = "explorer.exe";
+                    psi.Arguments = imagesPath;
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+                {
+                    psi.FileName = "open";
+                    psi.Arguments = imagesPath;
+                }
+                else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                {
+                    psi.FileName = "xdg-open";
+                    psi.Arguments = imagesPath;
+                }
 
+                using (System.Diagnostics.Process.Start(psi))
+                {
+                }
+
+                return Ok(new { message = "File browser opened" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
     }
 }

@@ -258,19 +258,40 @@ textarea.form-control {
   resize: vertical;
 }
 
-.image-url-input-group {
+.image-url-wrapper {
+  position: relative;
   display: flex;
-  gap: 10px;
   align-items: center;
 }
 
-.image-url-input-group .form-control {
+.image-url-wrapper .form-control {
   flex: 1;
+  padding-right: 40px;
 }
 
-.image-url-input-group .btn {
-  padding: 8px 16px;
-  white-space: nowrap;
+.btn-image-selector {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  padding: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-image-selector:hover {
+  color: #0056b3;
+  transform: scale(1.2);
+}
+
+.btn-image-selector:active {
+  transform: scale(0.95);
+}
+
+.btn-image-selector svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Image Selector Styles */

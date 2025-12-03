@@ -140,12 +140,23 @@
 
       <div class="form-group">
         <label for="editImageUrl">Image URL</label>
-        <input
-          type="text"
-          id="editImageUrl"
-          class="form-control"
-          [(ngModel)]="editImageUrl"
-          name="editImageUrl">
+        <div class="image-url-wrapper">
+          <input
+            type="text"
+            id="editImageUrl"
+            class="form-control"
+            [(ngModel)]="editImageUrl"
+            name="editImageUrl"
+            placeholder="/images/Villa1/image.jpg">
+          <button type="button"
+                  class="btn-image-selector"
+                  (click)="openFileBrowser()"
+                  title="Browse files">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="form-group">
@@ -248,12 +259,23 @@
 
       <div class="form-group">
         <label for="newImageUrl">Image URL</label>
-        <input
-          type="text"
-          id="newImageUrl"
-          class="form-control"
-          [(ngModel)]="newImageUrl"
-          name="newImageUrl">
+        <div class="image-url-wrapper">
+          <input
+            type="text"
+            id="newImageUrl"
+            class="form-control"
+            [(ngModel)]="newImageUrl"
+            name="newImageUrl"
+            placeholder="/images/Villa1/image.jpg">
+          <button type="button"
+                  class="btn-image-selector"
+                  (click)="openFileBrowser()"
+                  title="Browse files">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="form-group">
@@ -274,50 +296,6 @@
     </button>
     <button class="btn btn-primary" (click)="createProperty()" [disabled]="!newName || !newRate || !newOccupancy || !newSqft">
       Create Property
-    </button>
-  </div>
-</div>
-
-<!-- Image Selector Modal Backdrop -->
-<div class="modal-backdrop"
-     *ngIf="isImageSelectorVisible"
-     (click)="closeImageSelector()">
-</div>
-
-<!-- Image Selector Modal -->
-<div class="modal-container image-selector-modal"
-     *ngIf="isImageSelectorVisible"
-     (click)="$event.stopPropagation()">
-
-  <div class="modal-header">
-    <h2 class="modal-title">Select Image</h2>
-    <button class="close-button"
-            (click)="closeImageSelector()"
-            aria-label="Close">
-      <span>&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <div class="image-selector-grid">
-      <div *ngFor="let folder of imageFolders" class="image-folder">
-        <h3>{{ folder.name }}</h3>
-        <div class="images-grid">
-          <div *ngFor="let image of folder.images"
-               class="image-item"
-               (click)="selectImage(image.path)"
-               [title]="image.filename">
-            <img [src]="image.path" [alt]="image.filename" class="thumbnail">
-            <p>{{ image.filename }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn btn-secondary" (click)="closeImageSelector()">
-      Cancel
     </button>
   </div>
 </div>
